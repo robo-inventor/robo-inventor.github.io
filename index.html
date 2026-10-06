@@ -20,7 +20,7 @@ body {
     color: white;
 }
 
-/* ================= NAVBAR ================= */
+/* ===== NAVBAR ===== */
 
 .navbar {
     position: fixed;
@@ -28,7 +28,7 @@ body {
     left: 0;
     width: 100%;
     height: 72px;
-    background: rgba(5, 5, 5, 0.96);
+    background: rgba(5,5,5,0.96);
     border-bottom: 1px solid #222;
     display: flex;
     align-items: center;
@@ -64,7 +64,6 @@ body {
 .menu {
     font-size: 30px;
     cursor: pointer;
-    color: white;
     transition: 0.3s;
 }
 
@@ -72,7 +71,7 @@ body {
     color: #00e5ff;
 }
 
-/* ================= SIDEBAR ================= */
+/* ===== SIDEBAR ===== */
 
 .sidebar {
     position: fixed;
@@ -120,7 +119,7 @@ body {
     color: #00e5ff;
 }
 
-/* ================= HERO ================= */
+/* ===== HOME ===== */
 
 .hero {
     min-height: 100vh;
@@ -129,7 +128,6 @@ body {
     justify-content: center;
     text-align: center;
     padding: 110px 20px 60px;
-
     background:
         radial-gradient(circle at center, #102c34 0%, #071014 30%, #050505 65%);
 }
@@ -189,7 +187,7 @@ body {
     box-shadow: 0 0 30px rgba(0,229,255,0.4);
 }
 
-/* ================= SECTIONS ================= */
+/* ===== SECTIONS ===== */
 
 section {
     padding: 90px 7%;
@@ -209,10 +207,9 @@ section {
     text-align: center;
     color: #888;
     margin-bottom: 45px;
-    font-size: 16px;
 }
 
-/* ================= PROJECTS ================= */
+/* ===== PROJECTS ===== */
 
 .projects {
     display: grid;
@@ -239,7 +236,6 @@ section {
     height: 230px;
     object-fit: cover;
     display: block;
-    background: #151515;
 }
 
 .project-content {
@@ -251,16 +247,12 @@ section {
     margin-bottom: 12px;
 }
 
-.project-content h3 span {
-    color: #00e5ff;
-}
-
 .project-content p {
     color: #aaa;
     line-height: 1.7;
 }
 
-/* ================= GALLERY ================= */
+/* ===== GALLERY ===== */
 
 .gallery {
     display: grid;
@@ -282,7 +274,7 @@ section {
     border-color: #00e5ff;
 }
 
-/* ================= 3D PRINTING ================= */
+/* ===== 3D PRINTING ===== */
 
 .printing-box {
     max-width: 900px;
@@ -300,7 +292,7 @@ section {
     font-size: 17px;
 }
 
-/* ================= ABOUT ================= */
+/* ===== ABOUT ===== */
 
 .about-box {
     max-width: 850px;
@@ -322,7 +314,7 @@ section {
     color: #00e5ff;
 }
 
-/* ================= CONTACT ================= */
+/* ===== CONTACT ===== */
 
 .contact-box {
     max-width: 650px;
@@ -347,7 +339,7 @@ section {
     text-decoration: none;
 }
 
-/* ================= FOOTER ================= */
+/* ===== FOOTER ===== */
 
 footer {
     border-top: 1px solid #222;
@@ -360,7 +352,7 @@ footer strong {
     color: #00e5ff;
 }
 
-/* ================= MOBILE ================= */
+/* ===== MOBILE ===== */
 
 @media (max-width: 600px) {
 
@@ -399,23 +391,19 @@ footer strong {
     .printing-box {
         padding: 25px;
     }
-
-    .project-image {
-        height: 210px;
-    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
+<!-- NAVBAR -->
 
 <nav class="navbar">
 
     <div class="logo">
 
-        <img src="images/logo.png" alt="ROBO INVENTOR Logo">
+        <img src="logo.png" alt="ROBO INVENTOR Logo">
 
         <div class="logo-text">
             ROBO <span>INVENTOR</span>
@@ -428,35 +416,30 @@ footer strong {
 </nav>
 
 
-<!-- ================= SIDEBAR ================= -->
+<!-- SIDEBAR -->
 
 <div class="sidebar" id="sidebar">
 
     <div class="close" onclick="closeMenu()">×</div>
 
     <a href="#home" onclick="closeMenu()">🏠 Home</a>
-
     <a href="#projects" onclick="closeMenu()">🤖 My Projects</a>
-
     <a href="#gallery" onclick="closeMenu()">🖼️ Gallery</a>
-
     <a href="#printing" onclick="closeMenu()">🖨️ 3D Printing</a>
-
     <a href="#about" onclick="closeMenu()">👨‍💻 About</a>
-
     <a href="#contact" onclick="closeMenu()">📧 Contact</a>
 
 </div>
 
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 
 <section class="hero" id="home">
 
     <div class="hero-content">
 
         <img
-            src="images/logo.png"
+            src="logo.png"
             alt="ROBO INVENTOR"
             class="hero-logo"
         >
@@ -485,7 +468,7 @@ footer strong {
 </section>
 
 
-<!-- ================= PROJECTS ================= -->
+<!-- PROJECTS -->
 
 <section id="projects">
 
@@ -499,40 +482,14 @@ footer strong {
 
     <div class="projects">
 
-        <!--
-        YOUR REAL PROJECTS WILL BE ADDED HERE.
-
-        Example:
-
-        <div class="project-card">
-
-            <img
-                src="images/projects/project-name.jpg"
-                class="project-image"
-                alt="Project Name"
-            >
-
-            <div class="project-content">
-
-                <h3>
-                    Project Name
-                </h3>
-
-                <p>
-                    Project description goes here.
-                </p>
-
-            </div>
-
-        </div>
-        -->
+        <!-- YOUR REAL PROJECTS WILL BE ADDED HERE -->
 
     </div>
 
 </section>
 
 
-<!-- ================= GALLERY ================= -->
+<!-- GALLERY -->
 
 <section id="gallery">
 
@@ -546,16 +503,14 @@ footer strong {
 
     <div class="gallery">
 
-        <!--
-        YOUR PROJECT PHOTOS WILL BE ADDED HERE.
-        -->
+        <!-- YOUR REAL PROJECT PHOTOS WILL BE ADDED HERE -->
 
     </div>
 
 </section>
 
 
-<!-- ================= 3D PRINTING ================= -->
+<!-- 3D PRINTING -->
 
 <section id="printing">
 
@@ -575,16 +530,14 @@ footer strong {
             for my robotics projects.
         </p>
 
-        <!--
-        YOUR 3D PRINT PHOTOS WILL BE ADDED HERE.
-        -->
+        <!-- YOUR 3D PRINT PHOTOS WILL BE ADDED HERE -->
 
     </div>
 
 </section>
 
 
-<!-- ================= ABOUT ================= -->
+<!-- ABOUT -->
 
 <section id="about">
 
@@ -615,9 +568,7 @@ footer strong {
 
             <br><br>
 
-            <strong>
-                IMAGINE • CREATE • INNOVATE
-            </strong>
+            <strong>IMAGINE • CREATE • INNOVATE</strong>
 
         </p>
 
@@ -626,7 +577,7 @@ footer strong {
 </section>
 
 
-<!-- ================= CONTACT ================= -->
+<!-- CONTACT -->
 
 <section id="contact">
 
@@ -641,11 +592,6 @@ footer strong {
             You can reach me using the contact information below.
         </p>
 
-        <!--
-        REPLACE THIS EMAIL WITH YOUR REAL EMAIL
-        WHEN YOU ARE READY.
-        -->
-
         <a
             href="mailto:YOUR-EMAIL@example.com"
             class="email"
@@ -658,7 +604,7 @@ footer strong {
 </section>
 
 
-<!-- ================= FOOTER ================= -->
+<!-- FOOTER -->
 
 <footer>
 
@@ -669,26 +615,14 @@ footer strong {
 </footer>
 
 
-<!-- ================= JAVASCRIPT ================= -->
-
 <script>
 
 function openMenu() {
-
-    document
-        .getElementById("sidebar")
-        .classList
-        .add("active");
-
+    document.getElementById("sidebar").classList.add("active");
 }
 
 function closeMenu() {
-
-    document
-        .getElementById("sidebar")
-        .classList
-        .remove("active");
-
+    document.getElementById("sidebar").classList.remove("active");
 }
 
 </script>
