@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ROBO INVENTOR | BY ANIKET TIWARI</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #050505;
+    color: white;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    background: rgba(5, 5, 5, 0.96);
+    border-bottom: 1px solid #222;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.logo-text {
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.logo-text span {
+    color: #00e5ff;
+}
+
+.menu {
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s;
+}
+
+.menu:hover {
+    color: #00e5ff;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -290px;
+    width: 290px;
+    height: 100%;
+    background: #090909;
+    border-right: 1px solid #222;
+    padding-top: 90px;
+    transition: 0.3s ease;
+    z-index: 2000;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 18px 30px;
+    font-size: 17px;
+    border-bottom: 1px solid #1b1b1b;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: #111;
+    color: #00e5ff;
+    padding-left: 38px;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 32px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.close:hover {
+    color: #00e5ff;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 110px 20px 60px;
+
+    background:
+        radial-gradient(circle at center, #102c34 0%, #071014 30%, #050505 65%);
+}
+
+.hero-content {
+    max-width: 900px;
+}
+
+.hero-logo {
+    width: 230px;
+    max-width: 65vw;
+    border-radius: 50%;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 0 25px rgba(0,229,255,0.25));
+}
+
+.hero h1 {
+    font-size: clamp(42px, 8vw, 88px);
+    letter-spacing: 5px;
+    margin-bottom: 12px;
+}
+
+.hero h1 span {
+    color: #00e5ff;
+}
+
+.hero h2 {
+    font-size: clamp(18px, 3vw, 28px);
+    font-weight: normal;
+    color: #ccc;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+.hero p {
+    max-width: 700px;
+    margin: auto;
+    color: #999;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 15px 30px;
+    background: #00e5ff;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 30px rgba(0,229,255,0.4);
+}
+
+/* ================= SECTIONS ================= */
+
+section {
+    padding: 90px 7%;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.section-title span {
+    color: #00e5ff;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #888;
+    margin-bottom: 45px;
+    font-size: 16px;
+}
+
+/* ================= PROJECTS ================= */
+
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.project-card {
+    background: #0d0d0d;
+    border: 1px solid #222;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-7px);
+    border-color: #00e5ff;
+    box-shadow: 0 10px 35px rgba(0,229,255,0.12);
+}
+
+.project-image {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    display: block;
+    background: #151515;
+}
+
+.project-content {
+    padding: 25px;
+}
+
+.project-content h3 {
+    font-size: 23px;
+    margin-bottom: 12px;
+}
+
+.project-content h3 span {
+    color: #00e5ff;
+}
+
+.project-content p {
+    color: #aaa;
+    line-height: 1.7;
+}
+
+/* ================= GALLERY ================= */
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #222;
+    transition: 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.03);
+    border-color: #00e5ff;
+}
+
+/* ================= 3D PRINTING ================= */
+
+.printing-box {
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+    background: #0d0d0d;
+    border: 1px solid #222;
+    border-radius: 15px;
+    padding: 40px;
+}
+
+.printing-box p {
+    color: #aaa;
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+/* ================= ABOUT ================= */
+
+.about-box {
+    max-width: 850px;
+    margin: auto;
+    background: #0d0d0d;
+    border: 1px solid #222;
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+}
+
+.about-box p {
+    color: #aaa;
+    line-height: 1.9;
+    font-size: 17px;
+}
+
+.about-box strong {
+    color: #00e5ff;
+}
+
+/* ================= CONTACT ================= */
+
+.contact-box {
+    max-width: 650px;
+    margin: auto;
+    text-align: center;
+    background: #0d0d0d;
+    border: 1px solid #222;
+    padding: 40px;
+    border-radius: 15px;
+}
+
+.contact-box p {
+    color: #aaa;
+    line-height: 1.7;
+}
+
+.email {
+    display: inline-block;
+    margin-top: 20px;
+    color: #00e5ff;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+    border-top: 1px solid #222;
+    padding: 30px 20px;
+    text-align: center;
+    color: #777;
+}
+
+footer strong {
+    color: #00e5ff;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 0 15px;
+    }
+
+    .logo img {
+        width: 48px;
+        height: 48px;
+    }
+
+    .logo-text {
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    .hero h1 {
+        letter-spacing: 2px;
+    }
+
+    .hero-logo {
+        width: 180px;
+    }
+
+    section {
+        padding: 70px 5%;
+    }
+
+    .section-title {
+        font-size: 30px;
+    }
+
+    .about-box,
+    .contact-box,
+    .printing-box {
+        padding: 25px;
+    }
+
+    .project-image {
+        height: 210px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <img src="images/logo.png" alt="ROBO INVENTOR Logo">
+
+        <div class="logo-text">
+            ROBO <span>INVENTOR</span>
+        </div>
+
+    </div>
+
+    <div class="menu" onclick="openMenu()">☰</div>
+
+</nav>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar" id="sidebar">
+
+    <div class="close" onclick="closeMenu()">×</div>
+
+    <a href="#home" onclick="closeMenu()">🏠 Home</a>
+
+    <a href="#projects" onclick="closeMenu()">🤖 My Projects</a>
+
+    <a href="#gallery" onclick="closeMenu()">🖼️ Gallery</a>
+
+    <a href="#printing" onclick="closeMenu()">🖨️ 3D Printing</a>
+
+    <a href="#about" onclick="closeMenu()">👨‍💻 About</a>
+
+    <a href="#contact" onclick="closeMenu()">📧 Contact</a>
+
+</div>
+
+
+<!-- ================= HOME ================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <img
+            src="images/logo.png"
+            alt="ROBO INVENTOR"
+            class="hero-logo"
+        >
+
+        <h1>
+            ROBO <span>INVENTOR</span>
+        </h1>
+
+        <h2>
+            BY ANIKET TIWARI
+        </h2>
+
+        <p>
+            Welcome to my robotics world.
+            I build robots, electronics projects,
+            Arduino and ESP8266 systems,
+            automation projects and 3D printed creations.
+        </p>
+
+        <a href="#projects" class="button">
+            EXPLORE MY PROJECTS
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROJECTS ================= -->
+
+<section id="projects">
+
+    <h2 class="section-title">
+        MY <span>PROJECTS</span>
+    </h2>
+
+    <p class="section-subtitle">
+        My robotics and electronics creations
+    </p>
+
+    <div class="projects">
+
+        <!--
+        YOUR REAL PROJECTS WILL BE ADDED HERE.
+
+        Example:
+
+        <div class="project-card">
+
+            <img
+                src="images/projects/project-name.jpg"
+                class="project-image"
+                alt="Project Name"
+            >
+
+            <div class="project-content">
+
+                <h3>
+                    Project Name
+                </h3>
+
+                <p>
+                    Project description goes here.
+                </p>
+
+            </div>
+
+        </div>
+        -->
+
+    </div>
+
+</section>
+
+
+<!-- ================= GALLERY ================= -->
+
+<section id="gallery">
+
+    <h2 class="section-title">
+        PROJECT <span>GALLERY</span>
+    </h2>
+
+    <p class="section-subtitle">
+        Photos of my creations
+    </p>
+
+    <div class="gallery">
+
+        <!--
+        YOUR PROJECT PHOTOS WILL BE ADDED HERE.
+        -->
+
+    </div>
+
+</section>
+
+
+<!-- ================= 3D PRINTING ================= -->
+
+<section id="printing">
+
+    <h2 class="section-title">
+        3D <span>PRINTING</span>
+    </h2>
+
+    <p class="section-subtitle">
+        My 3D printed creations
+    </p>
+
+    <div class="printing-box">
+
+        <p>
+            I use 3D printing to create useful parts,
+            robot bodies, prototypes and creative designs
+            for my robotics projects.
+        </p>
+
+        <!--
+        YOUR 3D PRINT PHOTOS WILL BE ADDED HERE.
+        -->
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+    <h2 class="section-title">
+        ABOUT <span>ROBO INVENTOR</span>
+    </h2>
+
+    <div class="about-box">
+
+        <p>
+
+            Hello! I am
+            <strong>Aniket Tiwari</strong>,
+            the creator of
+            <strong>ROBO INVENTOR</strong>.
+
+            <br><br>
+
+            I enjoy building robots, electronics projects,
+            Arduino and ESP8266 systems, sensor-based projects,
+            automation systems and 3D printed creations.
+
+            <br><br>
+
+            This website is my personal robotics portfolio
+            where I share the projects I build and the things
+            I create.
+
+            <br><br>
+
+            <strong>
+                IMAGINE • CREATE • INNOVATE
+            </strong>
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact">
+
+    <h2 class="section-title">
+        <span>CONTACT</span>
+    </h2>
+
+    <div class="contact-box">
+
+        <p>
+            Want to contact ROBO INVENTOR?
+            You can reach me using the contact information below.
+        </p>
+
+        <!--
+        REPLACE THIS EMAIL WITH YOUR REAL EMAIL
+        WHEN YOU ARE READY.
+        -->
+
+        <a
+            href="mailto:YOUR-EMAIL@example.com"
+            class="email"
+        >
+            YOUR-EMAIL@example.com
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    © 2026
+    <strong>ROBO INVENTOR</strong>
+    — BY ANIKET TIWARI
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+function openMenu() {
+
+    document
+        .getElementById("sidebar")
+        .classList
+        .add("active");
+
+}
+
+function closeMenu() {
+
+    document
+        .getElementById("sidebar")
+        .classList
+        .remove("active");
+
+}
+
+</script>
+
+</body>
+</html>
