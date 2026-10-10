@@ -4,502 +4,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#030711">
-<title>ROBO INVENTOR — By Aniket Tiwari</title>
-<meta name="description" content="Robotics, Arduino, ESP8266, electronics and 3D printing projects by ROBO INVENTOR.">
+<meta name="theme-color" content="#000000">
+<title>ROBO INVENTOR | By Aniket Tiwari</title>
 
 <style>
 :root {
-  --bg: #030711;
-  --panel: rgba(5, 17, 34, .88);
-  --blue: #00bfff;
-  --cyan: #00e5ff;
-  --text: #f3f8ff;
-  --muted: #a6bad2;
-  --border: rgba(0, 191, 255, .32);
+  --cyan: #00eaff;
+  --blue: #008cff;
+  --text: #f4faff;
+  --muted: #b9c9dc;
+  --panel: rgba(3, 10, 24, .83);
+  --border: rgba(0, 220, 255, .32);
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
 
 body {
-  margin: 0;
-  background: var(--bg);
+  background: #000;
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.65;
   overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
-button { font: inherit; }
 
-/* Animated blue grid wallpaper */
+section {
+  padding: 95px 7%;
+  scroll-margin-top: 100px;
+}
+
+/* YOUR WALLPAPER */
 .wallpaper {
   position: fixed;
   inset: 0;
+  z-index: -3;
+  background: #000 url("wallpaper.png") center center / cover no-repeat;
+  transform: translateZ(0);
+}
+
+/* Animated blue atmosphere */
+.wallpaper-glow {
+  position: fixed;
+  inset: 0;
   z-index: -2;
-  overflow: hidden;
   pointer-events: none;
-  perspective: 450px;
   background:
-    radial-gradient(ellipse at 50% 55%, rgba(0, 75, 170, .2), transparent 55%),
-    #030711;
+    radial-gradient(ellipse at 50% 35%,
+      rgba(0, 220, 255, .13), transparent 43%),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, .15) 0%,
+      rgba(0, 0, 0, .05) 48%,
+      rgba(0, 0, 0, .62) 100%
+    );
+  animation: glowPulse 7s ease-in-out infinite alternate;
 }
 
-.grid {
-  position: absolute;
-  width: 180%;
-  height: 90%;
-  left: -40%;
-  bottom: -37%;
-  transform: rotateX(61deg);
-  transform-origin: center top;
-  background-image:
-    linear-gradient(rgba(0, 191, 255, .4) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 191, 255, .4) 1px, transparent 1px);
-  background-size: 58px 58px;
-  -webkit-mask-image: linear-gradient(transparent, black 25%, black 75%, transparent);
-  mask-image: linear-gradient(transparent, black 25%, black 75%, transparent);
-  animation: gridMove 9s linear infinite;
-}
-
-.horizon {
-  position: absolute;
-  top: 70%;
-  width: 100%;
-  height: 2px;
-  background: var(--cyan);
-  box-shadow: 0 0 18px 4px #008cff, 0 0 60px 8px #006aff88;
-  animation: pulse 3s ease-in-out infinite alternate;
-}
-
-.particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: var(--cyan);
-  box-shadow: 0 0 12px 3px #00bfff88;
-  animation: float 6s ease-in-out infinite alternate;
-}
-.p1 { top: 20%; left: 9%; }
-.p2 { top: 32%; left: 23%; animation-delay: -2s; }
-.p3 { top: 15%; left: 80%; animation-delay: -3s; }
-.p4 { top: 45%; left: 89%; animation-delay: -1s; }
-.p5 { top: 56%; left: 13%; animation-delay: -4s; }
-.p6 { top: 39%; left: 72%; animation-delay: -2.5s; }
-
-@keyframes gridMove {
-  from { background-position: 0 0; }
-  to { background-position: 0 116px; }
-}
-@keyframes pulse {
-  from { opacity: .55; }
+@keyframes glowPulse {
+  from { opacity: .65; }
   to { opacity: 1; }
 }
-@keyframes float {
-  from { transform: translateY(0); opacity: .3; }
-  to { transform: translateY(-28px); opacity: 1; }
+
+/* Live particles */
+#particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
-/* Horizontal navigation */
+/* Header and horizontal navigation */
 header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   z-index: 100;
-  background: rgba(2, 6, 14, .91);
+  width: 100%;
+  background: rgba(0, 0, 0, .78);
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
 .navbar {
-  width: min(1450px, 94%);
-  min-height: 75px;
+  max-width: 1450px;
+  min-height: 76px;
+  padding: 11px 5%;
   margin: auto;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 18px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   flex-shrink: 0;
 }
 
 .brand img {
-  width: 45px;
-  height: 45px;
+  width: 46px;
+  height: 46px;
   object-fit: contain;
-  border-radius: 50%;
 }
 
 .brand-name {
-  font-size: 20px;
-  font-weight: 800;
-  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+  line-height: 1.5;
 }
 
-.brand-name span { color: var(--cyan); }
+.brand-name span {
+  display: block;
+  color: var(--cyan);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
 
 .nav-links {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 5px;
 }
 
-.nav-links a {
-  color: #d1e0f1;
-  font-size: 14px;
-  padding: 12px 10px;
-  border-radius: 8px;
-  transition: .2s;
+.nav-links a,
+.menu-button {
+  padding: 9px 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #fff;
+  font-size: 13px;
+  transition: .25s;
 }
 
 .nav-links a:hover,
-.nav-links a.active {
+.menu-button:hover {
   color: var(--cyan);
-  background: #00bfff12;
+  border-color: var(--border);
+  background: rgba(0, 180, 255, .1);
 }
 
 .menu-button {
-  flex-shrink: 0;
-  width: 45px;
-  height: 45px;
-  border: 1px solid var(--blue);
-  border-radius: 14px;
-  color: var(--cyan);
-  background: #00bfff0c;
-  font-size: 23px;
   cursor: pointer;
-  box-shadow: 0 0 16px #00bfff20;
-}
-
-.menu-button:hover {
-  background: #00bfff20;
-  box-shadow: 0 0 25px #00bfff55;
+  border-color: var(--border);
+  font-size: 20px;
+  min-width: 43px;
 }
 
 .dropdown {
   display: none;
   position: absolute;
-  right: 3%;
-  top: 67px;
-  width: 230px;
+  right: 5%;
+  top: 70px;
+  min-width: 195px;
   padding: 10px;
-  background: rgba(3, 10, 23, .98);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  box-shadow: 0 15px 50px #000b;
+  border-radius: 13px;
+  background: #050b18;
+  box-shadow: 0 10px 35px #000;
 }
-.dropdown.open { display: block; }
-.dropdown a {
-  display: block;
-  padding: 13px;
-  border-radius: 8px;
-  color: #dcecff;
-}
-.dropdown a:hover { color: var(--cyan); background: #00bfff14; }
 
-/* Hero */
+.dropdown.open { display: grid; }
+
+.dropdown a {
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.dropdown a:hover {
+  color: var(--cyan);
+  background: #101d31;
+}
+
+/* Home */
 .hero {
-  width: min(1200px, 92%);
-  min-height: calc(100vh - 75px);
-  margin: auto;
-  padding: 60px 0 90px;
+  min-height: 100vh;
+  padding: 145px 7% 85px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  position: relative;
 }
 
-.logo-orbit {
-  width: 170px;
-  height: 170px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #00bfffaa;
-  border-radius: 50%;
-  margin-bottom: 23px;
-  box-shadow: 0 0 30px #008cff35, inset 0 0 20px #008cff16;
-  animation: glow 3s ease-in-out infinite alternate;
+.hero-content {
+  max-width: 950px;
+  animation: enter .9s ease both;
 }
 
-.logo-orbit img {
-  width: 87%;
-  height: 87%;
-  object-fit: contain;
-  border-radius: 50%;
-}
-
-@keyframes glow {
-  to { box-shadow: 0 0 40px #008cff66, inset 0 0 28px #008cff25; }
+@keyframes enter {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .eyebrow {
+  display: inline-block;
+  margin-bottom: 25px;
+  padding: 8px 15px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: rgba(0, 0, 0, .6);
   color: var(--cyan);
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 4px;
-  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 2px;
 }
 
-h1 {
-  margin: 16px 0 8px;
-  font-size: clamp(42px, 7vw, 88px);
-  line-height: 1.05;
-  letter-spacing: -2.5px;
+.hero h1 {
+  font-size: clamp(38px, 7.5vw, 82px);
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -2px;
+  text-shadow: 0 4px 25px #000;
 }
 
-h1 span, .highlight { color: var(--cyan); }
-
-.byline {
-  margin: 9px 0 24px;
-  font-size: clamp(14px, 2vw, 20px);
-  letter-spacing: 6px;
-  color: #d7e9ff;
+.gradient-text {
+  color: var(--cyan);
+  text-shadow: 0 0 25px rgba(0, 220, 255, .42);
 }
 
-.hero-description {
-  max-width: 730px;
-  color: #b9cce3;
-  line-height: 1.9;
-  font-size: 16px;
-  margin: 0 auto 27px;
+.hero p {
+  max-width: 700px;
+  margin: 25px auto 32px;
+  color: #d3dfef;
+  font-size: clamp(15px, 2vw, 19px);
+  text-shadow: 0 2px 8px #000;
 }
 
-.actions {
+.button-row {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 13px;
+  flex-wrap: wrap;
+  gap: 14px;
 }
 
 .btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 0 24px;
-  border: 1px solid var(--blue);
-  border-radius: 30px;
+  display: inline-block;
+  padding: 12px 21px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, .65);
   font-size: 14px;
-  font-weight: bold;
-  transition: .2s;
-  cursor: pointer;
+  font-weight: 700;
+  transition: .25s;
+}
+
+.btn-primary {
+  color: #001018;
+  background: linear-gradient(120deg, #008cff, #00f0ff);
+  border-color: transparent;
 }
 
 .btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 23px #00bfff40;
+  box-shadow: 0 0 24px rgba(0, 220, 255, .25);
 }
 
-.btn-primary {
-  color: #00101b;
-  background: linear-gradient(110deg, #00bfff, #00e5ff);
-  border-color: transparent;
-}
-
-.btn-outline {
-  color: #e7f7ff;
-  background: #020b18cc;
-}
-
-.scroll-cue {
-  position: absolute;
-  bottom: 20px;
-  color: var(--cyan);
-  font-size: 29px;
-  animation: bob 1.5s infinite ease-in-out;
-}
-@keyframes bob { 50% { transform: translateY(7px); } }
-
-/* Sections and galleries */
-.section {
-  width: min(1200px, 92%);
-  margin: auto;
-  padding: 75px 0;
-  scroll-margin-top: 80px;
-}
-
+/* Section headings */
 .section-heading {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 42px;
 }
 
 .section-heading h2 {
-  font-size: clamp(30px, 4vw, 45px);
-  margin: 12px 0;
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: 1.25;
 }
 
 .section-heading p {
+  margin-top: 12px;
   color: var(--muted);
-  line-height: 1.8;
 }
 
+.accent-line {
+  width: 65px;
+  height: 4px;
+  margin: 18px auto 0;
+  border-radius: 4px;
+  background: var(--cyan);
+  box-shadow: 0 0 15px var(--cyan);
+}
+
+/* Project and 3D printing galleries */
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  gap: 22px;
+  max-width: 1350px;
+  margin: auto;
 }
 
 .project-card {
-  min-width: 0;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 16px;
-  background: linear-gradient(145deg, #08182b, #030914);
+  background: var(--panel);
+  backdrop-filter: blur(8px);
   transition: .25s;
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
   border-color: var(--cyan);
-  box-shadow: 0 12px 35px #007bff20;
+  box-shadow: 0 0 24px rgba(0, 200, 255, .12);
 }
 
 .project-card img {
-  width: 100%;
-  height: 205px;
   display: block;
+  width: 100%;
+  height: 230px;
   object-fit: cover;
-  background: #071324;
-  border-bottom: 1px solid var(--border);
+  background: #07101d;
 }
 
-.project-info { padding: 18px; }
+.card-content { padding: 20px; }
 
-.project-info .tag {
-  color: var(--cyan);
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
-.project-info h3 {
-  margin: 10px 0;
+.card-content h3 {
+  margin-bottom: 9px;
   font-size: 19px;
 }
 
-.project-info p {
+.card-content p {
   color: var(--muted);
-  line-height: 1.7;
   font-size: 14px;
-  margin-bottom: 0;
 }
 
-.empty-state {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 45px 20px;
-  border: 1px dashed #00bfff55;
-  border-radius: 16px;
-  background: #031020b8;
-}
-
-.empty-state .empty-icon {
-  font-size: 35px;
-  margin-bottom: 12px;
-}
-
-.empty-state h3 { margin: 8px 0; }
-.empty-state p {
-  max-width: 560px;
-  margin: auto;
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-.info-panel {
-  padding: clamp(25px, 5vw, 50px);
+.tag {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 5px 10px;
   border: 1px solid var(--border);
-  border-radius: 20px;
-  background: linear-gradient(120deg, #06172bf0, #030914f2);
+  border-radius: 25px;
+  color: var(--cyan);
+  font-size: 11px;
 }
 
-.info-panel h2 {
-  font-size: clamp(28px, 4vw, 40px);
-  margin-top: 12px;
+.empty-card {
+  grid-column: 1 / -1;
+  padding: 38px 20px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, .65);
 }
 
-.info-panel p {
-  max-width: 850px;
-  color: #b5c9e1;
-  line-height: 1.9;
+.empty-card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: white;
+  font-size: 20px;
 }
 
-.contact-panel { text-align: center; }
-.contact-panel p { margin: 0 auto 24px; }
+/* About */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 24px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.about-panel,
+.contact-panel {
+  padding: 29px;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+}
+
+.about-panel h3,
+.contact-panel h3 {
+  margin-bottom: 14px;
+  font-size: 23px;
+}
+
+.about-panel p,
+.contact-panel p {
+  margin-bottom: 13px;
+  color: var(--muted);
+}
+
+.interest-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+  margin-top: 18px;
+}
+
+.interest {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, .3);
+  font-size: 13px;
+}
+
+/* Contact */
+.contact-panel {
+  max-width: 760px;
+  margin: auto;
+  text-align: center;
+}
 
 footer {
-  padding: 26px 4%;
-  text-align: center;
-  color: #839bb8;
-  font-size: 12px;
-  letter-spacing: 2px;
-  line-height: 2;
+  padding: 26px 15px;
   border-top: 1px solid var(--border);
+  background: rgba(0, 0, 0, .7);
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
 }
-footer strong { color: var(--cyan); }
 
-/* Mobile and tablet */
+footer span { color: var(--cyan); }
+
+/* Responsive layout */
 @media (max-width: 1000px) {
-  .navbar { gap: 8px; }
-  .brand-name { font-size: 17px; }
-  .brand img { width: 40px; height: 40px; }
-  .nav-links a { padding: 11px 6px; font-size: 12px; }
+  .navbar { flex-wrap: wrap; }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    flex-wrap: wrap;
+  }
   .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 760px) {
-  .navbar { min-height: 68px; width: 92%; }
-  .nav-links { display: none; }
-  .brand-name { font-size: 18px; }
-  .hero { min-height: calc(100svh - 68px); padding: 55px 0 85px; }
-  .logo-orbit { width: 140px; height: 140px; }
-  h1 { letter-spacing: -1.5px; }
-  .byline { letter-spacing: 4px; }
-  .hero-description { font-size: 15px; }
-  .section { padding: 55px 0; }
+@media (max-width: 650px) {
+  section { padding: 75px 5%; }
+  .navbar { padding: 10px 4%; gap: 8px; }
+  .brand img { width: 39px; height: 39px; }
+  .brand-name { font-size: 12px; }
+  .brand-name span { font-size: 9px; }
+  .nav-links { gap: 2px; }
+  .nav-links a { padding: 7px; font-size: 11px; }
+  .gallery, .about-layout { grid-template-columns: 1fr; }
+  .hero h1 { letter-spacing: -1px; }
+  .project-card img { height: 220px; }
 }
 
-@media (max-width: 520px) {
-  .gallery { grid-template-columns: 1fr; }
-  .project-card img { height: 220px; }
-  .btn { padding: 0 18px; }
-  .actions { width: 100%; }
-  .actions .btn { width: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="wallpaper" aria-hidden="true">
-  <div class="grid"></div>
-  <div class="horizon"></div>
-  <span class="particle p1"></span>
-  <span class="particle p2"></span>
-  <span class="particle p3"></span>
-  <span class="particle p4"></span>
-  <span class="particle p5"></span>
-  <span class="particle p6"></span>
-</div>
+<!-- Your uploaded wallpaper image -->
+<div class="wallpaper" aria-hidden="true"></div>
+<div class="wallpaper-glow" aria-hidden="true"></div>
+<canvas id="particles" aria-hidden="true"></canvas>
 
 <header>
-  <nav class="navbar" aria-label="Main navigation">
+  <nav class="navbar">
     <a class="brand" href="#home">
       <img src="logo.png" alt="ROBO INVENTOR logo">
-      <div class="brand-name">ROBO <span>INVENTOR</span></div>
+      <div class="brand-name">
+        ROBO INVENTOR
+        <span>BY ANIKET TIWARI</span>
+      </div>
     </a>
 
     <div class="nav-links">
-      <a href="#home" class="active">Home</a>
+      <a href="#home">Home</a>
       <a href="#projects">Projects</a>
       <a href="#printing">3D Printing</a>
       <a href="#about">About</a>
@@ -507,192 +490,273 @@ footer strong { color: var(--cyan); }
     </div>
 
     <button class="menu-button" id="menuButton"
-      aria-label="Open menu" aria-expanded="false"
-      aria-controls="dropdown">☰</button>
-  </nav>
+      aria-label="Open navigation menu" aria-expanded="false">☰</button>
 
-  <div class="dropdown" id="dropdown">
-    <a href="#home">⌂ &nbsp; Home</a>
-    <a href="#projects">⚙ &nbsp; Projects</a>
-    <a href="#printing">◇ &nbsp; 3D Printing</a>
-    <a href="#about">◎ &nbsp; About</a>
-    <a href="#contact">✉ &nbsp; Contact</a>
-  </div>
+    <div class="dropdown" id="dropdown">
+      <a href="#home">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#printing">3D Printing</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
 </header>
 
 <main>
-  <!-- HOME -->
   <section class="hero" id="home">
-    <div class="logo-orbit">
-      <img src="logo.png" alt="ROBO INVENTOR">
+    <div class="hero-content">
+      <div class="eyebrow">
+        DIY ROBOTICS · ELECTRONICS · 3D PRINTING
+      </div>
+
+      <h1>
+        BUILD IDEAS.<br>
+        <span class="gradient-text">CREATE THE FUTURE.</span>
+      </h1>
+
+      <p>
+        Welcome to ROBO INVENTOR — a world of robotics experiments,
+        Arduino projects, creative electronics and 3D-printed inventions.
+        Explore what you can build with imagination and technology.
+      </p>
+
+      <div class="button-row">
+        <a class="btn btn-primary" href="#projects">Explore Projects ↗</a>
+        <a class="btn" href="#printing">Explore 3D Printing</a>
+      </div>
     </div>
-
-    <div class="eyebrow">Build · Automate · Innovate</div>
-    <h1>ROBO <span>INVENTOR</span></h1>
-    <p class="byline">BY ANIKET TIWARI</p>
-
-    <p class="hero-description">
-      Welcome to my robotics world — exploring robots, electronics,
-      Arduino and ESP8266 systems, automation, and 3D-printed creations.
-      Ideas become projects, one build at a time.
-    </p>
-
-    <div class="actions">
-      <a class="btn btn-primary" href="#projects">Explore Projects →</a>
-      <a class="btn btn-outline" href="#printing">Explore 3D Prints</a>
-    </div>
-
-    <a class="scroll-cue" href="#projects" aria-label="Scroll to projects">⌄</a>
   </section>
 
-  <!-- PROJECT GALLERY -->
-  <section class="section" id="projects">
+  <section id="projects">
     <div class="section-heading">
-      <div class="eyebrow">Project Gallery</div>
-      <h2>My <span class="highlight">Projects</span></h2>
-      <p>Robotics, Arduino, ESP8266, electronics, and automation builds.</p>
+      <h2>My <span class="gradient-text">Projects</span></h2>
+      <p>Robots, electronics and inventions built one step at a time.</p>
+      <div class="accent-line"></div>
     </div>
 
     <div class="gallery" id="projectGallery">
-
-      <!--
-      TO ADD A PROJECT:
-      1. Upload its photo to the same GitHub folder as index.html.
-      2. Replace the example filename below with the uploaded filename.
-      3. Copy this card for every new project.
-      -->
-
-      <div class="empty-state">
-        <div class="empty-icon">🤖</div>
-        <h3>Project gallery ready</h3>
-        <p>
-          Your real project photos and descriptions will appear here.
-          Add a project card when you are ready to showcase a build.
-        </p>
+      <!-- Add your robotics project cards here. -->
+      <div class="empty-card">
+        <strong>Projects coming soon</strong>
+        Your real project photos and descriptions will appear here.
       </div>
-
     </div>
   </section>
 
-  <!-- SEPARATE 3D PRINTING GALLERY -->
-  <section class="section" id="printing">
+  <section id="printing">
     <div class="section-heading">
-      <div class="eyebrow">Made Layer by Layer</div>
-      <h2>3D <span class="highlight">Printing</span></h2>
-      <p>
-        A separate gallery for 3D-printed robot bodies, enclosures,
-        parts, and original designs.
-      </p>
+      <h2>3D <span class="gradient-text">Printing</span></h2>
+      <p>Custom designs, useful parts and creative printed models.</p>
+      <div class="accent-line"></div>
     </div>
 
     <div class="gallery" id="printingGallery">
+      <!-- Add your 3D printing cards here. -->
+      <div class="empty-card">
+        <strong>3D prints coming soon</strong>
+        Your printed models and design photos will appear here.
+      </div>
+    </div>
+  </section>
 
-      <!-- Add your 3D print photo cards here. -->
+  <section id="about">
+    <div class="section-heading">
+      <h2>About <span class="gradient-text">Me</span></h2>
+      <p>Curiosity is where every invention begins.</p>
+      <div class="accent-line"></div>
+    </div>
 
-      <div class="empty-state">
-        <div class="empty-icon">◇</div>
-        <h3>3D printing gallery ready</h3>
+    <div class="about-layout">
+      <div class="about-panel">
+        <h3>Hello, makers! 👋</h3>
         <p>
-          Your Bambu Lab A1 prints and 3D design photos will appear here.
-          This gallery is separate from your robotics projects.
+          Welcome to ROBO INVENTOR. I enjoy exploring how electronics,
+          robotics, coding and 3D printing work together.
+        </p>
+        <p>
+          This website is my portfolio for sharing builds, explaining
+          inventions and documenting my learning journey.
         </p>
       </div>
 
+      <div class="about-panel">
+        <h3>What I Explore</h3>
+        <div class="interest-list">
+          <div class="interest">🤖 Robotics</div>
+          <div class="interest">⚡ Electronics</div>
+          <div class="interest">🔧 Arduino</div>
+          <div class="interest">🖨️ 3D Printing</div>
+          <div class="interest">💻 Coding</div>
+          <div class="interest">💡 New Ideas</div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="section" id="about">
-    <div class="info-panel">
-      <div class="eyebrow">About the Inventor</div>
-      <h2>Small Ideas. <span class="highlight">Big Creations.</span></h2>
-      <p>
-        ROBO INVENTOR is my personal space for learning, experimenting,
-        and sharing projects in robotics, Arduino, ESP8266, electronics,
-        automation, and 3D printing.
-      </p>
-      <p>
-        I'm Aniket Tiwari. This website will grow alongside my builds,
-        with real project photos and descriptions added as projects are ready.
-      </p>
-      <a class="btn btn-outline" href="#projects">View Projects →</a>
+  <section id="contact">
+    <div class="section-heading">
+      <h2>Get in <span class="gradient-text">Touch</span></h2>
+      <p>Have an idea or want to talk about a robotics project?</p>
+      <div class="accent-line"></div>
     </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <div class="info-panel contact-panel">
-      <div class="eyebrow">Get in Touch</div>
-      <h2>Let's Build <span class="highlight">Something Cool.</span></h2>
+    <div class="contact-panel">
+      <h3>Let's Build Something!</h3>
       <p>
-        Want to talk about robotics, electronics, or 3D printing?
-        Contact information can be added here when you're ready.
+        Add your public email address so visitors can contact you
+        about your projects.
       </p>
-      <a class="btn btn-primary" href="#home">Back to Home ↑</a>
+
+      <!-- Replace the example email with your public email address. -->
+      <a class="btn btn-primary" href="mailto:YOUR-EMAIL@example.com">
+        Contact ROBO INVENTOR ✉
+      </a>
     </div>
   </section>
 </main>
 
 <footer>
-  <strong>ROBO INVENTOR</strong> &nbsp; — &nbsp; BY ANIKET TIWARI
-  <br>
-  IMAGINE · CREATE · INNOVATE
+  <p>© <span id="year"></span> <span>ROBO INVENTOR</span> · BY ANIKET TIWARI</p>
+  <p>Made with curiosity, creativity and code.</p>
 </footer>
 
 <script>
+/* LIVE WALLPAPER PARTICLES AND LIGHT EFFECTS */
+(() => {
+  const canvas = document.getElementById("particles");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  let w = 0;
+  let h = 0;
+  let dpr = 1;
+  let particles = [];
+  let elapsed = 0;
+  let lastTime = 0;
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  function resize() {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const count = Math.min(
+      75,
+      Math.max(25, Math.floor(w * h / 22000))
+    );
+
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.7 + .5,
+      speed: Math.random() * 18 + 5,
+      phase: Math.random() * Math.PI * 2
+    }));
+  }
+
+  function draw(delta) {
+    ctx.clearRect(0, 0, w, h);
+
+    /* Moving beam of cyan light */
+    const beamY = (elapsed * .035) % (h + 180) - 90;
+    const beam = ctx.createLinearGradient(
+      0, beamY - 70, 0, beamY + 70
+    );
+
+    beam.addColorStop(0, "rgba(0,220,255,0)");
+    beam.addColorStop(.5, "rgba(0,210,255,.10)");
+    beam.addColorStop(1, "rgba(0,220,255,0)");
+
+    ctx.fillStyle = beam;
+    ctx.fillRect(0, beamY - 70, w, 140);
+
+    /* Glowing moving points */
+    for (const p of particles) {
+      if (!reduceMotion) {
+        p.y -= p.speed * delta;
+        p.x += Math.sin(elapsed * .0007 + p.phase) * 5 * delta;
+      }
+
+      if (p.y < -5) {
+        p.y = h + 5;
+        p.x = Math.random() * w;
+      }
+
+      const opacity = .4 + .5 *
+        (Math.sin(elapsed * .002 + p.phase) + 1) / 2;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0,235,255,${opacity})`;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = "#00dfff";
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  function animate(now) {
+    const delta = lastTime
+      ? Math.min((now - lastTime) / 1000, .04)
+      : 0;
+
+    lastTime = now;
+
+    if (!document.hidden) {
+      if (!reduceMotion) elapsed += delta * 1000;
+      draw(delta);
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener("resize", resize);
+
+  document.addEventListener("visibilitychange", () => {
+    lastTime = 0;
+  });
+
+  resize();
+  requestAnimationFrame(animate);
+})();
+
+/* HAMBURGER MENU */
 const menuButton = document.getElementById("menuButton");
 const dropdown = document.getElementById("dropdown");
 
-function closeMenu() {
-  dropdown.classList.remove("open");
-  menuButton.setAttribute("aria-expanded", "false");
-  menuButton.setAttribute("aria-label", "Open menu");
-  menuButton.textContent = "☰";
-}
-
-menuButton.addEventListener("click", function () {
-  const isOpen = dropdown.classList.toggle("open");
-  menuButton.setAttribute("aria-expanded", String(isOpen));
-  menuButton.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
-  menuButton.textContent = isOpen ? "×" : "☰";
+menuButton.addEventListener("click", () => {
+  const open = dropdown.classList.toggle("open");
+  menuButton.setAttribute("aria-expanded", String(open));
 });
 
-dropdown.querySelectorAll("a").forEach(function (link) {
-  link.addEventListener("click", closeMenu);
+dropdown.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    dropdown.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  });
 });
 
-document.addEventListener("click", function (event) {
-  if (!dropdown.contains(event.target) && !menuButton.contains(event.target)) {
-    closeMenu();
+document.addEventListener("click", event => {
+  if (
+    !dropdown.contains(event.target) &&
+    !menuButton.contains(event.target)
+  ) {
+    dropdown.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
   }
 });
 
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape") closeMenu();
-});
-
-/* Highlight the current navigation section */
-const sections = document.querySelectorAll("main section[id]");
-const navLinks = document.querySelectorAll(".nav-links a");
-
-if ("IntersectionObserver" in window) {
-  const observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        navLinks.forEach(function (link) {
-          link.classList.toggle(
-            "active",
-            link.getAttribute("href") === "#" + entry.target.id
-          );
-        });
-      }
-    });
-  }, { rootMargin: "-25% 0px -60% 0px" });
-
-  sections.forEach(function (section) {
-    observer.observe(section);
-  });
-}
+document.getElementById("year").textContent =
+  new Date().getFullYear();
 </script>
 
 </body>
