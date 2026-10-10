@@ -1,630 +1,698 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ROBO INVENTOR | BY ANIKET TIWARI</title>
+<meta name="theme-color" content="#030711">
+<title>ROBO INVENTOR — By Aniket Tiwari</title>
+<meta name="description" content="Robotics, Arduino, ESP8266, electronics and 3D printing projects by ROBO INVENTOR.">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
+:root {
+  --bg: #030711;
+  --panel: rgba(5, 17, 34, .88);
+  --blue: #00bfff;
+  --cyan: #00e5ff;
+  --text: #f3f8ff;
+  --muted: #a6bad2;
+  --border: rgba(0, 191, 255, .32);
 }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #050505;
-    color: white;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
-/* ===== NAVBAR ===== */
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+
+/* Animated blue grid wallpaper */
+.wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+  perspective: 450px;
+  background:
+    radial-gradient(ellipse at 50% 55%, rgba(0, 75, 170, .2), transparent 55%),
+    #030711;
+}
+
+.grid {
+  position: absolute;
+  width: 180%;
+  height: 90%;
+  left: -40%;
+  bottom: -37%;
+  transform: rotateX(61deg);
+  transform-origin: center top;
+  background-image:
+    linear-gradient(rgba(0, 191, 255, .4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 191, 255, .4) 1px, transparent 1px);
+  background-size: 58px 58px;
+  -webkit-mask-image: linear-gradient(transparent, black 25%, black 75%, transparent);
+  mask-image: linear-gradient(transparent, black 25%, black 75%, transparent);
+  animation: gridMove 9s linear infinite;
+}
+
+.horizon {
+  position: absolute;
+  top: 70%;
+  width: 100%;
+  height: 2px;
+  background: var(--cyan);
+  box-shadow: 0 0 18px 4px #008cff, 0 0 60px 8px #006aff88;
+  animation: pulse 3s ease-in-out infinite alternate;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--cyan);
+  box-shadow: 0 0 12px 3px #00bfff88;
+  animation: float 6s ease-in-out infinite alternate;
+}
+.p1 { top: 20%; left: 9%; }
+.p2 { top: 32%; left: 23%; animation-delay: -2s; }
+.p3 { top: 15%; left: 80%; animation-delay: -3s; }
+.p4 { top: 45%; left: 89%; animation-delay: -1s; }
+.p5 { top: 56%; left: 13%; animation-delay: -4s; }
+.p6 { top: 39%; left: 72%; animation-delay: -2.5s; }
+
+@keyframes gridMove {
+  from { background-position: 0 0; }
+  to { background-position: 0 116px; }
+}
+@keyframes pulse {
+  from { opacity: .55; }
+  to { opacity: 1; }
+}
+@keyframes float {
+  from { transform: translateY(0); opacity: .3; }
+  to { transform: translateY(-28px); opacity: 1; }
+}
+
+/* Horizontal navigation */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(2, 6, 14, .91);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+}
 
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 72px;
-    background: rgba(5,5,5,0.96);
-    border-bottom: 1px solid #222;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 25px;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
+  width: min(1450px, 94%);
+  min-height: 75px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
-.logo img {
-    width: 55px;
-    height: 55px;
-    object-fit: contain;
-    border-radius: 50%;
+.brand img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
-.logo-text {
-    font-size: 18px;
-    font-weight: bold;
-    letter-spacing: 2px;
+.brand-name {
+  font-size: 20px;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
-.logo-text span {
-    color: #00e5ff;
+.brand-name span { color: var(--cyan); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
 }
 
-.menu {
-    font-size: 30px;
-    cursor: pointer;
-    transition: 0.3s;
+.nav-links a {
+  color: #d1e0f1;
+  font-size: 14px;
+  padding: 12px 10px;
+  border-radius: 8px;
+  transition: .2s;
 }
 
-.menu:hover {
-    color: #00e5ff;
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--cyan);
+  background: #00bfff12;
 }
 
-/* ===== SIDEBAR ===== */
-
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: -290px;
-    width: 290px;
-    height: 100%;
-    background: #090909;
-    border-right: 1px solid #222;
-    padding-top: 90px;
-    transition: 0.3s ease;
-    z-index: 2000;
+.menu-button {
+  flex-shrink: 0;
+  width: 45px;
+  height: 45px;
+  border: 1px solid var(--blue);
+  border-radius: 14px;
+  color: var(--cyan);
+  background: #00bfff0c;
+  font-size: 23px;
+  cursor: pointer;
+  box-shadow: 0 0 16px #00bfff20;
 }
 
-.sidebar.active {
-    left: 0;
+.menu-button:hover {
+  background: #00bfff20;
+  box-shadow: 0 0 25px #00bfff55;
 }
 
-.sidebar a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 18px 30px;
-    font-size: 17px;
-    border-bottom: 1px solid #1b1b1b;
-    transition: 0.3s;
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 3%;
+  top: 67px;
+  width: 230px;
+  padding: 10px;
+  background: rgba(3, 10, 23, .98);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 15px 50px #000b;
 }
-
-.sidebar a:hover {
-    background: #111;
-    color: #00e5ff;
-    padding-left: 38px;
+.dropdown.open { display: block; }
+.dropdown a {
+  display: block;
+  padding: 13px;
+  border-radius: 8px;
+  color: #dcecff;
 }
+.dropdown a:hover { color: var(--cyan); background: #00bfff14; }
 
-.close {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    font-size: 32px;
-    cursor: pointer;
-    color: #aaa;
-}
-
-.close:hover {
-    color: #00e5ff;
-}
-
-/* ===== HOME ===== */
-
+/* Hero */
 .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 110px 20px 60px;
-    background:
-        radial-gradient(circle at center, #102c34 0%, #071014 30%, #050505 65%);
+  width: min(1200px, 92%);
+  min-height: calc(100vh - 75px);
+  margin: auto;
+  padding: 60px 0 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
 }
 
-.hero-content {
-    max-width: 900px;
+.logo-orbit {
+  width: 170px;
+  height: 170px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #00bfffaa;
+  border-radius: 50%;
+  margin-bottom: 23px;
+  box-shadow: 0 0 30px #008cff35, inset 0 0 20px #008cff16;
+  animation: glow 3s ease-in-out infinite alternate;
 }
 
-.hero-logo {
-    width: 230px;
-    max-width: 65vw;
-    border-radius: 50%;
-    margin-bottom: 25px;
-    filter: drop-shadow(0 0 25px rgba(0,229,255,0.25));
+.logo-orbit img {
+  width: 87%;
+  height: 87%;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
-.hero h1 {
-    font-size: clamp(42px, 8vw, 88px);
-    letter-spacing: 5px;
-    margin-bottom: 12px;
+@keyframes glow {
+  to { box-shadow: 0 0 40px #008cff66, inset 0 0 28px #008cff25; }
 }
 
-.hero h1 span {
-    color: #00e5ff;
+.eyebrow {
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  text-transform: uppercase;
 }
 
-.hero h2 {
-    font-size: clamp(18px, 3vw, 28px);
-    font-weight: normal;
-    color: #ccc;
-    margin-bottom: 25px;
-    letter-spacing: 2px;
+h1 {
+  margin: 16px 0 8px;
+  font-size: clamp(42px, 7vw, 88px);
+  line-height: 1.05;
+  letter-spacing: -2.5px;
 }
 
-.hero p {
-    max-width: 700px;
-    margin: auto;
-    color: #999;
-    font-size: 17px;
-    line-height: 1.8;
+h1 span, .highlight { color: var(--cyan); }
+
+.byline {
+  margin: 9px 0 24px;
+  font-size: clamp(14px, 2vw, 20px);
+  letter-spacing: 6px;
+  color: #d7e9ff;
 }
 
-.button {
-    display: inline-block;
-    margin-top: 32px;
-    padding: 15px 30px;
-    background: #00e5ff;
-    color: #000;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: 0.3s;
+.hero-description {
+  max-width: 730px;
+  color: #b9cce3;
+  line-height: 1.9;
+  font-size: 16px;
+  margin: 0 auto 27px;
 }
 
-.button:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 0 30px rgba(0,229,255,0.4);
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 13px;
 }
 
-/* ===== SECTIONS ===== */
-
-section {
-    padding: 90px 7%;
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--blue);
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: .2s;
+  cursor: pointer;
 }
 
-.section-title {
-    text-align: center;
-    font-size: 38px;
-    margin-bottom: 15px;
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 23px #00bfff40;
 }
 
-.section-title span {
-    color: #00e5ff;
+.btn-primary {
+  color: #00101b;
+  background: linear-gradient(110deg, #00bfff, #00e5ff);
+  border-color: transparent;
 }
 
-.section-subtitle {
-    text-align: center;
-    color: #888;
-    margin-bottom: 45px;
+.btn-outline {
+  color: #e7f7ff;
+  background: #020b18cc;
 }
 
-/* ===== PROJECTS ===== */
+.scroll-cue {
+  position: absolute;
+  bottom: 20px;
+  color: var(--cyan);
+  font-size: 29px;
+  animation: bob 1.5s infinite ease-in-out;
+}
+@keyframes bob { 50% { transform: translateY(7px); } }
 
-.projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+/* Sections and galleries */
+.section {
+  width: min(1200px, 92%);
+  margin: auto;
+  padding: 75px 0;
+  scroll-margin-top: 80px;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.section-heading h2 {
+  font-size: clamp(30px, 4vw, 45px);
+  margin: 12px 0;
+}
+
+.section-heading p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
 }
 
 .project-card {
-    background: #0d0d0d;
-    border: 1px solid #222;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: 0.3s;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #08182b, #030914);
+  transition: .25s;
 }
 
 .project-card:hover {
-    transform: translateY(-7px);
-    border-color: #00e5ff;
-    box-shadow: 0 10px 35px rgba(0,229,255,0.12);
+  transform: translateY(-5px);
+  border-color: var(--cyan);
+  box-shadow: 0 12px 35px #007bff20;
 }
 
-.project-image {
-    width: 100%;
-    height: 230px;
-    object-fit: cover;
-    display: block;
+.project-card img {
+  width: 100%;
+  height: 205px;
+  display: block;
+  object-fit: cover;
+  background: #071324;
+  border-bottom: 1px solid var(--border);
 }
 
-.project-content {
-    padding: 25px;
+.project-info { padding: 18px; }
+
+.project-info .tag {
+  color: var(--cyan);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
-.project-content h3 {
-    font-size: 23px;
-    margin-bottom: 12px;
+.project-info h3 {
+  margin: 10px 0;
+  font-size: 19px;
 }
 
-.project-content p {
-    color: #aaa;
-    line-height: 1.7;
+.project-info p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+  margin-bottom: 0;
 }
 
-/* ===== GALLERY ===== */
-
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 45px 20px;
+  border: 1px dashed #00bfff55;
+  border-radius: 16px;
+  background: #031020b8;
 }
 
-.gallery img {
-    width: 100%;
-    height: 270px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 1px solid #222;
-    transition: 0.3s;
+.empty-state .empty-icon {
+  font-size: 35px;
+  margin-bottom: 12px;
 }
 
-.gallery img:hover {
-    transform: scale(1.03);
-    border-color: #00e5ff;
+.empty-state h3 { margin: 8px 0; }
+.empty-state p {
+  max-width: 560px;
+  margin: auto;
+  color: var(--muted);
+  line-height: 1.8;
 }
 
-/* ===== 3D PRINTING ===== */
-
-.printing-box {
-    max-width: 900px;
-    margin: auto;
-    text-align: center;
-    background: #0d0d0d;
-    border: 1px solid #222;
-    border-radius: 15px;
-    padding: 40px;
+.info-panel {
+  padding: clamp(25px, 5vw, 50px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: linear-gradient(120deg, #06172bf0, #030914f2);
 }
 
-.printing-box p {
-    color: #aaa;
-    line-height: 1.8;
-    font-size: 17px;
+.info-panel h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  margin-top: 12px;
 }
 
-/* ===== ABOUT ===== */
-
-.about-box {
-    max-width: 850px;
-    margin: auto;
-    background: #0d0d0d;
-    border: 1px solid #222;
-    border-radius: 15px;
-    padding: 40px;
-    text-align: center;
+.info-panel p {
+  max-width: 850px;
+  color: #b5c9e1;
+  line-height: 1.9;
 }
 
-.about-box p {
-    color: #aaa;
-    line-height: 1.9;
-    font-size: 17px;
-}
-
-.about-box strong {
-    color: #00e5ff;
-}
-
-/* ===== CONTACT ===== */
-
-.contact-box {
-    max-width: 650px;
-    margin: auto;
-    text-align: center;
-    background: #0d0d0d;
-    border: 1px solid #222;
-    padding: 40px;
-    border-radius: 15px;
-}
-
-.contact-box p {
-    color: #aaa;
-    line-height: 1.7;
-}
-
-.email {
-    display: inline-block;
-    margin-top: 20px;
-    color: #00e5ff;
-    font-size: 18px;
-    text-decoration: none;
-}
-
-/* ===== FOOTER ===== */
+.contact-panel { text-align: center; }
+.contact-panel p { margin: 0 auto 24px; }
 
 footer {
-    border-top: 1px solid #222;
-    padding: 30px 20px;
-    text-align: center;
-    color: #777;
+  padding: 26px 4%;
+  text-align: center;
+  color: #839bb8;
+  font-size: 12px;
+  letter-spacing: 2px;
+  line-height: 2;
+  border-top: 1px solid var(--border);
+}
+footer strong { color: var(--cyan); }
+
+/* Mobile and tablet */
+@media (max-width: 1000px) {
+  .navbar { gap: 8px; }
+  .brand-name { font-size: 17px; }
+  .brand img { width: 40px; height: 40px; }
+  .nav-links a { padding: 11px 6px; font-size: 12px; }
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-footer strong {
-    color: #00e5ff;
+@media (max-width: 760px) {
+  .navbar { min-height: 68px; width: 92%; }
+  .nav-links { display: none; }
+  .brand-name { font-size: 18px; }
+  .hero { min-height: calc(100svh - 68px); padding: 55px 0 85px; }
+  .logo-orbit { width: 140px; height: 140px; }
+  h1 { letter-spacing: -1.5px; }
+  .byline { letter-spacing: 4px; }
+  .hero-description { font-size: 15px; }
+  .section { padding: 55px 0; }
 }
 
-/* ===== MOBILE ===== */
-
-@media (max-width: 600px) {
-
-    .navbar {
-        padding: 0 15px;
-    }
-
-    .logo img {
-        width: 48px;
-        height: 48px;
-    }
-
-    .logo-text {
-        font-size: 14px;
-        letter-spacing: 1px;
-    }
-
-    .hero h1 {
-        letter-spacing: 2px;
-    }
-
-    .hero-logo {
-        width: 180px;
-    }
-
-    section {
-        padding: 70px 5%;
-    }
-
-    .section-title {
-        font-size: 30px;
-    }
-
-    .about-box,
-    .contact-box,
-    .printing-box {
-        padding: 25px;
-    }
+@media (max-width: 520px) {
+  .gallery { grid-template-columns: 1fr; }
+  .project-card img { height: 220px; }
+  .btn { padding: 0 18px; }
+  .actions { width: 100%; }
+  .actions .btn { width: 100%; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-
-<nav class="navbar">
-
-    <div class="logo">
-
-        <img src="logo.png" alt="ROBO INVENTOR Logo">
-
-        <div class="logo-text">
-            ROBO <span>INVENTOR</span>
-        </div>
-
-    </div>
-
-    <div class="menu" onclick="openMenu()">☰</div>
-
-</nav>
-
-
-<!-- SIDEBAR -->
-
-<div class="sidebar" id="sidebar">
-
-    <div class="close" onclick="closeMenu()">×</div>
-
-    <a href="#home" onclick="closeMenu()">🏠 Home</a>
-    <a href="#projects" onclick="closeMenu()">🤖 My Projects</a>
-    <a href="#gallery" onclick="closeMenu()">🖼️ Gallery</a>
-    <a href="#printing" onclick="closeMenu()">🖨️ 3D Printing</a>
-    <a href="#about" onclick="closeMenu()">👨‍💻 About</a>
-    <a href="#contact" onclick="closeMenu()">📧 Contact</a>
-
+<div class="wallpaper" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="horizon"></div>
+  <span class="particle p1"></span>
+  <span class="particle p2"></span>
+  <span class="particle p3"></span>
+  <span class="particle p4"></span>
+  <span class="particle p5"></span>
+  <span class="particle p6"></span>
 </div>
 
+<header>
+  <nav class="navbar" aria-label="Main navigation">
+    <a class="brand" href="#home">
+      <img src="logo.png" alt="ROBO INVENTOR logo">
+      <div class="brand-name">ROBO <span>INVENTOR</span></div>
+    </a>
 
-<!-- HOME -->
-
-<section class="hero" id="home">
-
-    <div class="hero-content">
-
-        <img
-            src="logo.png"
-            alt="ROBO INVENTOR"
-            class="hero-logo"
-        >
-
-        <h1>
-            ROBO <span>INVENTOR</span>
-        </h1>
-
-        <h2>
-            BY ANIKET TIWARI
-        </h2>
-
-        <p>
-            Welcome to my robotics world.
-            I build robots, electronics projects,
-            Arduino and ESP8266 systems,
-            automation projects and 3D printed creations.
-        </p>
-
-        <a href="#projects" class="button">
-            EXPLORE MY PROJECTS
-        </a>
-
+    <div class="nav-links">
+      <a href="#home" class="active">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#printing">3D Printing</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </div>
 
-</section>
+    <button class="menu-button" id="menuButton"
+      aria-label="Open menu" aria-expanded="false"
+      aria-controls="dropdown">☰</button>
+  </nav>
 
+  <div class="dropdown" id="dropdown">
+    <a href="#home">⌂ &nbsp; Home</a>
+    <a href="#projects">⚙ &nbsp; Projects</a>
+    <a href="#printing">◇ &nbsp; 3D Printing</a>
+    <a href="#about">◎ &nbsp; About</a>
+    <a href="#contact">✉ &nbsp; Contact</a>
+  </div>
+</header>
 
-<!-- PROJECTS -->
+<main>
+  <!-- HOME -->
+  <section class="hero" id="home">
+    <div class="logo-orbit">
+      <img src="logo.png" alt="ROBO INVENTOR">
+    </div>
 
-<section id="projects">
+    <div class="eyebrow">Build · Automate · Innovate</div>
+    <h1>ROBO <span>INVENTOR</span></h1>
+    <p class="byline">BY ANIKET TIWARI</p>
 
-    <h2 class="section-title">
-        MY <span>PROJECTS</span>
-    </h2>
-
-    <p class="section-subtitle">
-        My robotics and electronics creations
+    <p class="hero-description">
+      Welcome to my robotics world — exploring robots, electronics,
+      Arduino and ESP8266 systems, automation, and 3D-printed creations.
+      Ideas become projects, one build at a time.
     </p>
 
-    <div class="projects">
-
-        <!-- YOUR REAL PROJECTS WILL BE ADDED HERE -->
-
+    <div class="actions">
+      <a class="btn btn-primary" href="#projects">Explore Projects →</a>
+      <a class="btn btn-outline" href="#printing">Explore 3D Prints</a>
     </div>
 
-</section>
+    <a class="scroll-cue" href="#projects" aria-label="Scroll to projects">⌄</a>
+  </section>
 
-
-<!-- GALLERY -->
-
-<section id="gallery">
-
-    <h2 class="section-title">
-        PROJECT <span>GALLERY</span>
-    </h2>
-
-    <p class="section-subtitle">
-        Photos of my creations
-    </p>
-
-    <div class="gallery">
-
-        <!-- YOUR REAL PROJECT PHOTOS WILL BE ADDED HERE -->
-
+  <!-- PROJECT GALLERY -->
+  <section class="section" id="projects">
+    <div class="section-heading">
+      <div class="eyebrow">Project Gallery</div>
+      <h2>My <span class="highlight">Projects</span></h2>
+      <p>Robotics, Arduino, ESP8266, electronics, and automation builds.</p>
     </div>
 
-</section>
+    <div class="gallery" id="projectGallery">
 
+      <!--
+      TO ADD A PROJECT:
+      1. Upload its photo to the same GitHub folder as index.html.
+      2. Replace the example filename below with the uploaded filename.
+      3. Copy this card for every new project.
+      -->
 
-<!-- 3D PRINTING -->
-
-<section id="printing">
-
-    <h2 class="section-title">
-        3D <span>PRINTING</span>
-    </h2>
-
-    <p class="section-subtitle">
-        My 3D printed creations
-    </p>
-
-    <div class="printing-box">
-
+      <div class="empty-state">
+        <div class="empty-icon">🤖</div>
+        <h3>Project gallery ready</h3>
         <p>
-            I use 3D printing to create useful parts,
-            robot bodies, prototypes and creative designs
-            for my robotics projects.
+          Your real project photos and descriptions will appear here.
+          Add a project card when you are ready to showcase a build.
         </p>
-
-        <!-- YOUR 3D PRINT PHOTOS WILL BE ADDED HERE -->
+      </div>
 
     </div>
+  </section>
 
-</section>
+  <!-- SEPARATE 3D PRINTING GALLERY -->
+  <section class="section" id="printing">
+    <div class="section-heading">
+      <div class="eyebrow">Made Layer by Layer</div>
+      <h2>3D <span class="highlight">Printing</span></h2>
+      <p>
+        A separate gallery for 3D-printed robot bodies, enclosures,
+        parts, and original designs.
+      </p>
+    </div>
 
+    <div class="gallery" id="printingGallery">
 
-<!-- ABOUT -->
+      <!-- Add your 3D print photo cards here. -->
 
-<section id="about">
-
-    <h2 class="section-title">
-        ABOUT <span>ROBO INVENTOR</span>
-    </h2>
-
-    <div class="about-box">
-
+      <div class="empty-state">
+        <div class="empty-icon">◇</div>
+        <h3>3D printing gallery ready</h3>
         <p>
-
-            Hello! I am
-            <strong>Aniket Tiwari</strong>,
-            the creator of
-            <strong>ROBO INVENTOR</strong>.
-
-            <br><br>
-
-            I enjoy building robots, electronics projects,
-            Arduino and ESP8266 systems, sensor-based projects,
-            automation systems and 3D printed creations.
-
-            <br><br>
-
-            This website is my personal robotics portfolio
-            where I share the projects I build and the things
-            I create.
-
-            <br><br>
-
-            <strong>IMAGINE • CREATE • INNOVATE</strong>
-
+          Your Bambu Lab A1 prints and 3D design photos will appear here.
+          This gallery is separate from your robotics projects.
         </p>
+      </div>
 
     </div>
+  </section>
 
-</section>
-
-
-<!-- CONTACT -->
-
-<section id="contact">
-
-    <h2 class="section-title">
-        <span>CONTACT</span>
-    </h2>
-
-    <div class="contact-box">
-
-        <p>
-            Want to contact ROBO INVENTOR?
-            You can reach me using the contact information below.
-        </p>
-
-        <a
-            href="mailto:YOUR-EMAIL@example.com"
-            class="email"
-        >
-            YOUR-EMAIL@example.com
-        </a>
-
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="info-panel">
+      <div class="eyebrow">About the Inventor</div>
+      <h2>Small Ideas. <span class="highlight">Big Creations.</span></h2>
+      <p>
+        ROBO INVENTOR is my personal space for learning, experimenting,
+        and sharing projects in robotics, Arduino, ESP8266, electronics,
+        automation, and 3D printing.
+      </p>
+      <p>
+        I'm Aniket Tiwari. This website will grow alongside my builds,
+        with real project photos and descriptions added as projects are ready.
+      </p>
+      <a class="btn btn-outline" href="#projects">View Projects →</a>
     </div>
+  </section>
 
-</section>
-
-
-<!-- FOOTER -->
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="info-panel contact-panel">
+      <div class="eyebrow">Get in Touch</div>
+      <h2>Let's Build <span class="highlight">Something Cool.</span></h2>
+      <p>
+        Want to talk about robotics, electronics, or 3D printing?
+        Contact information can be added here when you're ready.
+      </p>
+      <a class="btn btn-primary" href="#home">Back to Home ↑</a>
+    </div>
+  </section>
+</main>
 
 <footer>
-
-    © 2026
-    <strong>ROBO INVENTOR</strong>
-    — BY ANIKET TIWARI
-
+  <strong>ROBO INVENTOR</strong> &nbsp; — &nbsp; BY ANIKET TIWARI
+  <br>
+  IMAGINE · CREATE · INNOVATE
 </footer>
 
-
 <script>
-
-function openMenu() {
-    document.getElementById("sidebar").classList.add("active");
-}
+const menuButton = document.getElementById("menuButton");
+const dropdown = document.getElementById("dropdown");
 
 function closeMenu() {
-    document.getElementById("sidebar").classList.remove("active");
+  dropdown.classList.remove("open");
+  menuButton.setAttribute("aria-expanded", "false");
+  menuButton.setAttribute("aria-label", "Open menu");
+  menuButton.textContent = "☰";
 }
 
+menuButton.addEventListener("click", function () {
+  const isOpen = dropdown.classList.toggle("open");
+  menuButton.setAttribute("aria-expanded", String(isOpen));
+  menuButton.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+  menuButton.textContent = isOpen ? "×" : "☰";
+});
+
+dropdown.querySelectorAll("a").forEach(function (link) {
+  link.addEventListener("click", closeMenu);
+});
+
+document.addEventListener("click", function (event) {
+  if (!dropdown.contains(event.target) && !menuButton.contains(event.target)) {
+    closeMenu();
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") closeMenu();
+});
+
+/* Highlight the current navigation section */
+const sections = document.querySelectorAll("main section[id]");
+const navLinks = document.querySelectorAll(".nav-links a");
+
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        navLinks.forEach(function (link) {
+          link.classList.toggle(
+            "active",
+            link.getAttribute("href") === "#" + entry.target.id
+          );
+        });
+      }
+    });
+  }, { rootMargin: "-25% 0px -60% 0px" });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+}
 </script>
 
 </body>
