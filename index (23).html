@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ROBO INVENTOR by Aniket Tiwari | Robotics &amp; 3D Printing</title>
+  <meta name="description" content="Welcome to ROBO INVENTOR by Aniket Tiwari. Explore DIY robotics, Arduino projects, electronics experiments, and 3D printing creations.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://robo-inventor.github.io/">
+  <meta name="theme-color" content="#050914">
+  <meta property="og:title" content="ROBO INVENTOR by Aniket Tiwari">
+  <meta property="og:description" content="DIY robotics, Arduino experiments, electronics, and 3D printing creations by ROBO INVENTOR.">
+  <meta property="og:url" content="https://robo-inventor.github.io/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="logo.png">
+  <style>
+    :root{--cyan:#47eaff;--blue:#5587ff;--ink:#eefaff;--muted:#b5c8d8;--panel:rgba(5,14,28,.78);--line:rgba(71,234,255,.25)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:90px}
+    body{margin:0;background:#030711;color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.6;overflow-x:hidden}
+    a{color:inherit}
+    .wallpaper{position:fixed;inset:0;z-index:-3;background:#030711 url("wallpaper.png") center center/cover no-repeat;opacity:.43}
+    .wallpaper:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,7,18,.55),rgba(2,7,18,.82) 55%,#030711)}
+    #particles{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none}
+    .beam{position:fixed;left:-30%;right:-30%;top:25%;height:2px;z-index:-1;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(71,234,255,.1),rgba(71,234,255,.8),rgba(85,135,255,.3),transparent);filter:blur(1px);animation:beam 11s linear infinite;opacity:.65}
+    @keyframes beam{0%{transform:translateY(-30vh) rotate(-8deg)}100%{transform:translateY(75vh) rotate(-8deg)}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.beam{animation:none}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+    .wrap{width:min(1120px,92%);margin:auto}
+    header{position:sticky;top:0;z-index:20;background:rgba(3,8,19,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:900;letter-spacing:.08em}
+    .brand img{width:46px;height:46px;object-fit:contain;border-radius:12px}
+    .brand span{display:block;line-height:1.2}
+    .brand small{display:block;color:var(--cyan);font-size:.68rem;letter-spacing:.15em;margin-top:4px}
+    .navlinks{display:flex;align-items:center;gap:20px}
+    .navlinks a,.drop a{font-size:.92rem;text-decoration:none;color:#d9eaf6;transition:color .2s}
+    .navlinks a:hover,.drop a:hover{color:var(--cyan)}
+    .menu{position:relative}
+    .menubtn{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:9px 12px;cursor:pointer;font-size:1.1rem}
+    .drop{display:none;position:absolute;right:0;top:48px;min-width:185px;padding:10px;background:#071426;border:1px solid var(--line);border-radius:14px;box-shadow:0 15px 40px #0009}
+    .drop.open{display:grid;gap:10px}
+    .drop a{padding:7px 9px}
+    .hero{min-height:75vh;display:grid;align-content:center;padding:90px 0 75px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:7px 13px;color:var(--cyan);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;background:#061222a8}
+    h1{font-size:clamp(2.7rem,7vw,5.8rem);line-height:.98;letter-spacing:-.055em;margin:24px 0 18px;max-width:900px}
+    h1 span{color:var(--cyan);text-shadow:0 0 28px #47eaff35}
+    .hero p{font-size:clamp(1.05rem,2vw,1.25rem);color:var(--muted);max-width:700px}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-weight:750;border-radius:12px;padding:12px 18px;border:1px solid var(--line);transition:transform .2s,background .2s}
+    .btn:hover{transform:translateY(-2px)}
+    .primary{background:var(--cyan);color:#03101b;border-color:var(--cyan)}
+    .secondary{background:#071426b8}
+    section{padding:68px 0}
+    .section-head{margin-bottom:25px}
+    .kicker{color:var(--cyan);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
+    h2{font-size:clamp(1.9rem,4vw,3rem);line-height:1.1;margin:8px 0 10px;letter-spacing:-.03em}
+    .section-head p,.muted{color:var(--muted);max-width:720px}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .card{border:1px solid var(--line);background:var(--panel);border-radius:18px;overflow:hidden;box-shadow:0 12px 40px #0002}
+    .card .visual{aspect-ratio:16/10;display:grid;place-items:center;background:linear-gradient(135deg,#0b1a30,#07101f);border-bottom:1px solid var(--line);overflow:hidden}
+    .visual img{width:100%;height:100%;object-fit:cover}
+    .placeholder{padding:20px;text-align:center;color:#a8eefa}
+    .placeholder .symbol{font-size:2.5rem;display:block;margin-bottom:6px}
+    .cardbody{padding:18px}
+    .card h3{margin:0 0 7px;font-size:1.12rem}
+    .card p{margin:0;color:var(--muted);font-size:.94rem}
+    .tag{display:inline-block;margin-top:13px;font-size:.75rem;color:var(--cyan);border:1px solid var(--line);border-radius:999px;padding:4px 9px}
+    .aboutgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:stretch}
+    .panel{border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:25px}
+    .values{display:grid;gap:12px}
+    .value{display:flex;gap:12px;align-items:flex-start}
+    .value b{display:block}
+    .value span{color:var(--muted);font-size:.92rem}
+    .contactrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+    footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.9rem}
+    footer .foot{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .toplink{color:var(--cyan);text-decoration:none}
+    @media(max-width:800px){.navlinks{gap:11px}.navlinks a{font-size:.83rem}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.aboutgrid{grid-template-columns:1fr}}
+    @media(max-width:580px){.nav{min-height:68px}.brand img{width:39px;height:39px}.brand{font-size:.86rem}.navlinks{display:none}.hero{min-height:70vh;padding:72px 0 55px}.grid{grid-template-columns:1fr}section{padding:52px 0}.panel{padding:20px}}
+  </style>
+</head>
+<body>
+  <div class="wallpaper" aria-hidden="true"></div>
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="beam" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#home" aria-label="ROBO INVENTOR home">
+        <img src="logo.png" alt="ROBO INVENTOR logo" onerror="this.style.display='none'">
+        <span>ROBO INVENTOR<small>BY ANIKET TIWARI</small></span>
+      </a>
+      <nav class="navlinks" aria-label="Main navigation">
+        <a href="#home">Home</a><a href="#projects">Projects</a><a href="#printing">3D Printing</a><a href="#about">About</a><a href="#contact">Contact</a>
+      </nav>
+      <div class="menu">
+        <button class="menubtn" id="menuButton" aria-label="Open navigation menu" aria-expanded="false" aria-controls="dropdown">☰</button>
+        <nav class="drop" id="dropdown" aria-label="More navigation">
+          <a href="#home">Home</a><a href="#projects">Projects</a><a href="#printing">3D Printing</a><a href="#about">About</a><a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="home">
+      <div>
+        <span class="eyebrow">⚡ DIY Robotics • Electronics • 3D Printing</span>
+        <h1>BUILD IDEAS.<br><span>MAKE THE FUTURE.</span></h1>
+        <p>Welcome to ROBO INVENTOR by Aniket Tiwari — a maker space for hands-on robotics, Arduino experiments, electronics, and 3D-printing creations.</p>
+        <div class="actions">
+          <a class="btn primary" href="#projects">Explore Projects ↗</a>
+          <a class="btn secondary" href="#printing">See 3D Printing</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Built with curiosity</div>
+          <h2>Robotics Projects</h2>
+          <p>Experiments, prototypes, and ideas from the ROBO INVENTOR workbench. Replace the sample cards below with photos and details of your real builds.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <div class="visual"><div class="placeholder"><span class="symbol">🤖</span>Project photo coming soon</div></div>
+            <div class="cardbody"><h3>Arduino Robot</h3><p>Add a photo, the parts used, what the robot does, and what you learned.</p><span class="tag">Arduino • Robotics</span></div>
+          </article>
+          <article class="card">
+            <div class="visual"><div class="placeholder"><span class="symbol">📡</span>Project photo coming soon</div></div>
+            <div class="cardbody"><h3>Smart Electronics</h3><p>Show a sensor, automation, or electronics experiment you have built and tested.</p><span class="tag">Sensors • Electronics</span></div>
+          </article>
+          <article class="card">
+            <div class="visual"><div class="placeholder"><span class="symbol">🚗</span>Project photo coming soon</div></div>
+            <div class="cardbody"><h3>Robot Car</h3><p>Add your car's real features, wiring, controller, and a photo or demonstration video link.</p><span class="tag">Motors • Control</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="printing">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Designed and made</div>
+          <h2>3D Printing</h2>
+          <p>Functional parts, robot bodies, enclosures, and creative prints. Add your own print photos and model links when they are ready.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><div class="visual"><div class="placeholder"><span class="symbol">🧩</span>Print photo coming soon</div></div><div class="cardbody"><h3>Robot Parts</h3><p>Share a bracket, mount, wheel, or other part you designed or printed.</p><span class="tag">3D Design</span></div></article>
+          <article class="card"><div class="visual"><div class="placeholder"><span class="symbol">🛠️</span>Print photo coming soon</div></div><div class="cardbody"><h3>Project Enclosures</h3><p>Show a case or holder that keeps electronics safe and organized.</p><span class="tag">Prototyping</span></div></article>
+          <article class="card"><div class="visual"><div class="placeholder"><span class="symbol">✨</span>Print photo coming soon</div></div><div class="cardbody"><h3>Creative Prints</h3><p>Display decorative models and useful objects printed on your 3D printer.</p><span class="tag">Maker Projects</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head"><div class="kicker">The maker behind the builds</div><h2>About ROBO INVENTOR</h2></div>
+        <div class="aboutgrid">
+          <div class="panel">
+            <h3>Learn by building.</h3>
+            <p class="muted">ROBO INVENTOR is a personal robotics and maker portfolio by Aniket Tiwari. This site documents practical experiments with Arduino, sensors, motors, electronics, and 3D printing—one project at a time.</p>
+            <p class="muted">The goal is to share the process: the idea, the components, the build, the tests, and the improvements.</p>
+          </div>
+          <div class="panel values">
+            <div class="value"><span>⚙️</span><div><b>Robotics</b><span>Build and test real mechanisms and robot systems.</span></div></div>
+            <div class="value"><span>💡</span><div><b>Experimentation</b><span>Learn through practical electronics and coding.</span></div></div>
+            <div class="value"><span>🖨️</span><div><b>3D Printing</b><span>Turn useful designs into physical parts and prototypes.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="panel">
+          <div class="kicker">Get in touch</div>
+          <h2>Contact ROBO INVENTOR</h2>
+          <p class="muted">Have a robotics idea, a question about a build, or a 3D-printing project to share? Contact details can be added here.</p>
+          <div class="contactrow">
+            <a class="btn primary" href="https://github.com/robo-inventor/robo-inventor.github.io" target="_blank" rel="noopener noreferrer">GitHub Repository ↗</a>
+            <!-- Replace the example email below with your real public contact email before using it. -->
+            <a class="btn secondary" href="mailto:YOUR-EMAIL@example.com">Email (update address)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <span>© <span id="year"></span> ROBO INVENTOR · BY ANIKET TIWARI</span>
+      <a class="toplink" href="#home">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    // Responsive hamburger menu
+    const menuButton = document.getElementById('menuButton');
+    const dropdown = document.getElementById('dropdown');
+    menuButton.addEventListener('click', () => {
+      const open = dropdown.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(open));
+    });
+    dropdown.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      dropdown.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+    }));
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.menu')) {
+        dropdown.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Lightweight animated cyan particles. The page still works if canvas is unavailable.
+    (() => {
+      const canvas = document.getElementById('particles');
+      const ctx = canvas.getContext && canvas.getContext('2d');
+      if (!ctx) return;
+      let w = 0, h = 0, particles = [];
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth; h = window.innerHeight;
+        canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr);
+        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = Math.min(65, Math.floor(w / 19));
+        particles = Array.from({length: count}, () => ({
+          x: Math.random() * w, y: Math.random() * h,
+          r: Math.random() * 1.7 + .4, speed: Math.random() * .35 + .08,
+          alpha: Math.random() * .55 + .2
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        particles.forEach(p => {
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(71,234,255,${p.alpha})`; ctx.fill();
+          if (!reduceMotion) {
+            p.y -= p.speed;
+            if (p.y < -5) { p.y = h + 5; p.x = Math.random() * w; }
+          }
+        });
+        if (!reduceMotion) requestAnimationFrame(draw);
+      }
+      window.addEventListener('resize', resize, {passive:true});
+      resize(); draw();
+    })();
+  </script>
+</body>
+</html>
