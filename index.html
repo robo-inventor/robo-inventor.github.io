@@ -4,270 +4,556 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ROBO INVENTOR by Aniket Tiwari | Robotics & 3D Printing</title>
-<meta name="description" content="Explore Arduino robots, the ELEGOO V4 robot car, Wi-Fi camera control, obstacle avoidance, line following, object following and 3D printing by ROBO INVENTOR.">
+<title>ROBO INVENTOR by Aniket Tiwari | Robotics &amp; 3D Printing</title>
+<meta name="description" content="Explore Arduino robotics, the ELEGOO V4 robot car, obstacle avoidance, Wi-Fi camera control, line following, object following and 3D printing by ROBO INVENTOR.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://robo-inventor.github.io/">
 <meta name="theme-color" content="#050914">
+<meta property="og:title" content="ROBO INVENTOR by Aniket Tiwari">
+<meta property="og:description" content="DIY robotics, Arduino projects and 3D printing by ROBO INVENTOR.">
+<meta property="og:url" content="https://robo-inventor.github.io/">
+<meta property="og:type" content="website">
 <link rel="icon" href="logo.png">
+
 <style>
-:root{--cyan:#47eaff;--blue:#5587ff;--ink:#eefaff;--muted:#b5c8d8;--panel:rgba(5,14,28,.86);--line:rgba(71,234,255,.25)}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{margin:0;background:#030711;color:var(--ink);font-family:Arial, sans-serif;line-height:1.6;overflow-x:hidden}
-a{color:inherit}
-.wallpaper{position:fixed;inset:0;z-index:-3;background:#030711 url("wallpaper.png") center/cover no-repeat;opacity:.43}
-.wallpaper:after{content:"";position:absolute;inset:0;background:linear-gradient(#02071299,#020712e0 55%,#030711)}
-#particles{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none}
-.beam{position:fixed;left:-30%;right:-30%;top:25%;height:2px;z-index:-1;pointer-events:none;background:linear-gradient(90deg,transparent,#47eaff22,#47eaffcc,#5587ff55,transparent);animation:beam 11s linear infinite}
-@keyframes beam{0%{transform:translateY(-30vh) rotate(-8deg)}100%{transform:translateY(75vh) rotate(-8deg)}}
-.wrap{width:min(1120px,92%);margin:auto}
-header{position:sticky;top:0;z-index:20;background:#030813ed;backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;letter-spacing:.06em}
-.brand img{width:44px;height:44px;object-fit:contain;border-radius:10px}
-.brand small{display:block;color:var(--cyan);font-size:.68rem;letter-spacing:.12em}
-.navlinks{display:flex;gap:18px}
-.navlinks a,.drop a{text-decoration:none;color:#d9eaf6;font-size:.92rem}
-.navlinks a:hover,.drop a:hover{color:var(--cyan)}
-.menu{position:relative}
-.menubtn{background:transparent;border:1px solid var(--line);color:white;border-radius:10px;padding:9px 12px;cursor:pointer}
-.drop{display:none;position:absolute;right:0;top:48px;min-width:180px;padding:12px;background:#071426;border:1px solid var(--line);border-radius:12px}
-.drop.open{display:grid;gap:12px}
-.hero{min-height:72vh;display:grid;align-content:center;padding:80px 0}
-.eyebrow,.kicker{color:var(--cyan);font-size:.8rem;letter-spacing:.13em;text-transform:uppercase;font-weight:bold}
-.eyebrow{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:8px 12px;background:#061222aa}
-h1{font-size:clamp(2.6rem,7vw,5.5rem);line-height:1;margin:24px 0;letter-spacing:-.04em}
-h1 span{color:var(--cyan)}
-.hero p,.muted,.section-head p{color:var(--muted);max-width:720px}
-.hero p{font-size:1.15rem}
-.actions,.contactrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
-.btn{display:inline-block;text-decoration:none;font-weight:bold;border-radius:11px;padding:12px 17px;border:1px solid var(--line)}
-.primary{background:var(--cyan);color:#03101b;border-color:var(--cyan)}
-.secondary{background:#071426}
-section{padding:65px 0}
-.section-head{margin-bottom:24px}
-h2{font-size:clamp(1.8rem,4vw,3rem);line-height:1.1;margin:8px 0}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.card,.panel{border:1px solid var(--line);background:var(--panel);border-radius:17px;overflow:hidden}
-.visual{aspect-ratio:16/10;display:grid;place-items:center;background:linear-gradient(135deg,#0b1a30,#07101f);overflow:hidden}
-.visual img{width:100%;height:100%;object-fit:cover}
-.cardbody{padding:18px}
-.card h3{margin:0 0 7px}
-.card p,.mode p{margin:0;color:var(--muted);font-size:.94rem}
-.tag{display:inline-block;margin-top:12px;font-size:.76rem;color:var(--cyan);border:1px solid var(--line);border-radius:20px;padding:4px 9px}
-.car-card{grid-column:1/-1}
-.car-card .visual{aspect-ratio:16/9;max-height:540px}
-.car-card .visual img{object-fit:contain;background:#07101f}
-.car-intro{margin-bottom:15px!important}
-.mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:18px}
-.mode{background:#0c1f34;border:1px solid #47eaff30;border-radius:12px;padding:15px}
-.mode h4{color:var(--cyan);margin:0 0 6px}
-.aboutgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.panel{padding:24px}
-.values{display:grid;gap:14px}
-.value b{display:block}
-.value span{color:var(--muted)}
-footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-size:.9rem}
-.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.toplink{color:var(--cyan);text-decoration:none}
-@media(max-width:800px){.navlinks{gap:9px}.navlinks a{font-size:.8rem}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.aboutgrid{grid-template-columns:1fr}}
-@media(max-width:580px){.nav{min-height:65px}.brand{font-size:.8rem}.brand img{width:36px;height:36px}.navlinks{display:none}.hero{min-height:65vh;padding:60px 0}.grid{grid-template-columns:1fr}section{padding:48px 0}.panel{padding:18px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.beam{animation:none}}
+:root {
+  --cyan: #47eaff;
+  --ink: #eefaff;
+  --muted: #b5c8d8;
+  --panel: rgba(5,14,28,.88);
+  --line: rgba(71,234,255,.25);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  margin: 0;
+  background: #030711;
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+.wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background: #030711 url("wallpaper.png") center/cover no-repeat;
+  opacity: .43;
+}
+.wallpaper:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,#02071299,#020712e0 55%,#030711);
+}
+#particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+}
+.beam {
+  position: fixed;
+  left: -30%;
+  right: -30%;
+  top: 25%;
+  height: 2px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg,transparent,#47eaff22,#47eaffcc,#5587ff55,transparent);
+  animation: beam 11s linear infinite;
+}
+@keyframes beam {
+  0% { transform: translateY(-30vh) rotate(-8deg); }
+  100% { transform: translateY(75vh) rotate(-8deg); }
+}
+.wrap { width: min(1120px,92%); margin: auto; }
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(3,8,19,.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.nav {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 900;
+  letter-spacing: .06em;
+}
+.brand img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+.brand small {
+  display: block;
+  color: var(--cyan);
+  font-size: .68rem;
+  letter-spacing: .12em;
+}
+.navlinks { display: flex; gap: 18px; }
+.navlinks a, .drop a {
+  text-decoration: none;
+  color: #d9eaf6;
+  font-size: .92rem;
+}
+.navlinks a:hover, .drop a:hover { color: var(--cyan); }
+.menu { position: relative; }
+.menubtn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: white;
+  border-radius: 10px;
+  padding: 9px 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+.drop {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 48px;
+  min-width: 180px;
+  padding: 12px;
+  background: #071426;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 15px 40px #0009;
+}
+.drop.open { display: grid; gap: 12px; }
+.hero {
+  min-height: 75vh;
+  display: grid;
+  align-content: center;
+  padding: 85px 0 70px;
+}
+.eyebrow, .kicker {
+  color: var(--cyan);
+  font-size: .8rem;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.eyebrow {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  padding: 8px 12px;
+  background: #061222aa;
+}
+h1 {
+  font-size: clamp(2.6rem,7vw,5.5rem);
+  line-height: 1;
+  margin: 24px 0;
+  letter-spacing: -.04em;
+}
+h1 span { color: var(--cyan); }
+.hero p, .muted, .section-head p { color: var(--muted); max-width: 720px; }
+.hero p { font-size: 1.15rem; }
+.actions, .contactrow { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 11px;
+  padding: 12px 17px;
+  border: 1px solid var(--line);
+}
+.primary { background: var(--cyan); color: #03101b; border-color: var(--cyan); }
+.secondary { background: #071426; }
+section { padding: 65px 0; }
+.section-head { margin-bottom: 24px; }
+h2 {
+  font-size: clamp(1.8rem,4vw,3rem);
+  line-height: 1.1;
+  margin: 8px 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 18px;
+}
+.card, .panel {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 17px;
+  overflow: hidden;
+}
+.visual {
+  aspect-ratio: 16/10;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg,#0b1a30,#07101f);
+  overflow: hidden;
+}
+.visual img { width: 100%; height: 100%; object-fit: cover; }
+.placeholder { padding: 20px; text-align: center; color: #a8eefa; }
+.placeholder .symbol { display: block; font-size: 2.5rem; }
+.cardbody { padding: 18px; }
+.card h3 { margin: 0 0 7px; }
+.card p { margin: 0; color: var(--muted); font-size: .94rem; }
+.tag {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: .76rem;
+  color: var(--cyan);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 4px 9px;
+}
+.car-card { grid-column: 1 / -1; }
+.car-card .visual {
+  display: block;
+  aspect-ratio: auto;
+  height: auto;
+  max-height: none;
+  background: #07101f;
+  border-bottom: 1px solid var(--line);
+}
+.car-card .visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  background: #07101f;
+}
+.car-intro { margin-bottom: 15px !important; }
+.mode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+.mode {
+  background: rgba(12,31,52,.92);
+  border: 1px solid rgba(71,234,255,.22);
+  border-radius: 12px;
+  padding: 15px;
+}
+.mode h4 { color: var(--cyan); margin: 0 0 8px; }
+.mode p { line-height: 1.6; margin: 0; }
+.aboutgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.panel { padding: 24px; }
+.values { display: grid; gap: 14px; }
+.value b { display: block; }
+.value span { color: var(--muted); }
+.contactrow { display: flex; flex-wrap: wrap; gap: 12px; }
+footer {
+  border-top: 1px solid var(--line);
+  padding: 25px 0;
+  color: var(--muted);
+  font-size: .9rem;
+}
+.foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.toplink { color: var(--cyan); text-decoration: none; }
+@media(max-width:800px) {
+  .navlinks { gap: 9px; }
+  .navlinks a { font-size: .8rem; }
+  .grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .aboutgrid { grid-template-columns: 1fr; }
+}
+@media(max-width:580px) {
+  .nav { min-height: 65px; }
+  .brand { font-size: .8rem; }
+  .brand img { width: 36px; height: 36px; }
+  .navlinks { display: none; }
+  .hero { min-height: 65vh; padding: 60px 0; }
+  .grid { grid-template-columns: 1fr; }
+  section { padding: 48px 0; }
+  .panel { padding: 18px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior: auto; }
+  .beam { animation: none; }
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
 </style>
 </head>
+
 <body>
 <div class="wallpaper" aria-hidden="true"></div>
 <canvas id="particles" aria-hidden="true"></canvas>
 <div class="beam" aria-hidden="true"></div>
 
 <header>
-<div class="wrap nav">
-<a class="brand" href="#home">
-<img src="logo.png" alt="ROBO INVENTOR logo" onerror="this.style.display='none'">
-<span>ROBO INVENTOR<small>BY ANIKET TIWARI</small></span>
-</a>
-<nav class="navlinks">
-<a href="#home">Home</a><a href="#projects">Projects</a><a href="#printing">3D Printing</a><a href="#about">About</a><a href="#contact">Contact</a>
-</nav>
-<div class="menu">
-<button class="menubtn" id="menuButton" aria-label="Open menu" aria-expanded="false">☰</button>
-<nav class="drop" id="dropdown">
-<a href="#home">Home</a><a href="#projects">Projects</a><a href="#printing">3D Printing</a><a href="#about">About</a><a href="#contact">Contact</a>
-</nav>
-</div>
-</div>
+  <div class="wrap nav">
+    <a class="brand" href="#home">
+      <img src="logo.png" alt="ROBO INVENTOR logo" onerror="this.style.display='none'">
+      <span>ROBO INVENTOR<small>BY ANIKET TIWARI</small></span>
+    </a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#printing">3D Printing</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="menu">
+      <button class="menubtn" id="menuButton" aria-expanded="false" aria-controls="dropdown" aria-label="Open menu">☰</button>
+      <nav class="drop" id="dropdown" aria-label="Menu">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#printing">3D Printing</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
 </header>
 
 <main>
 <section class="hero wrap" id="home">
-<div>
-<span class="eyebrow">DIY Robotics • Electronics • 3D Printing</span>
-<h1>BUILD IDEAS.<br><span>MAKE THE FUTURE.</span></h1>
-<p>Welcome to ROBO INVENTOR by Aniket Tiwari — a maker space for robotics, Arduino experiments, electronics and 3D-printing creations.</p>
-<div class="actions">
-<a class="btn primary" href="#projects">Explore Projects ↗</a>
-<a class="btn secondary" href="#printing">See 3D Printing</a>
-</div>
-</div>
+  <div>
+    <span class="eyebrow">DIY Robotics • Electronics • 3D Printing</span>
+    <h1>BUILD IDEAS.<br><span>MAKE THE FUTURE.</span></h1>
+    <p>Welcome to ROBO INVENTOR by Aniket Tiwari — a maker space for robotics, Arduino experiments, electronics and 3D-printing creations.</p>
+    <div class="actions">
+      <a class="btn primary" href="#projects">Explore Projects ↗</a>
+      <a class="btn secondary" href="#printing">See 3D Printing</a>
+    </div>
+  </div>
 </section>
 
 <section id="projects">
 <div class="wrap">
-<div class="section-head">
-<div class="kicker">Built with curiosity</div>
-<h2>Robotics Projects</h2>
-<p>Explore my robot builds, sensors, wireless control projects and practical electronics experiments.</p>
-</div>
-<div class="grid">
+  <div class="section-head">
+    <div class="kicker">Built with curiosity</div>
+    <h2>Robotics Projects</h2>
+    <p>Explore my robot builds, sensors, wireless control projects and practical electronics experiments.</p>
+  </div>
 
-<article class="card car-card">
-<div class="visual">
-<img src="elegoo-v4-car.png" alt="ELEGOO V4 multi-mode robot car with yellow wheels and ultrasonic sensor" loading="lazy">
-</div>
-<div class="cardbody">
-<h3>ELEGOO V4 Multi-Mode Robot Car</h3>
-<p class="car-intro">My ELEGOO V4 robot car combines autonomous navigation, sensor-based movement and wireless camera control. Explore its operating modes below.</p>
-<div class="mode-grid">
-<div class="mode">
-<h4>Obstacle Avoidance</h4>
-<p>Uses an ultrasonic sensor to detect obstacles ahead and help the car avoid collisions.</p>
-</div>
-<div class="mode">
-<h4>Camera + Wi-Fi Mode</h4>
-<p>View the camera feed and control the car wirelessly through its compatible Wi-Fi interface.</p>
-</div>
-<div class="mode">
-<h4>Line Following Mode</h4>
-<p>Follows a marked path using the car's line-tracking sensors.</p>
-</div>
-<div class="mode">
-<h4>Object Following Mode</h4>
-<p>Uses the supported sensors and program to detect and follow an object.</p>
-</div>
-<div class="mode">
-<h4>Manual Driving</h4>
-<p>Drive and steer the car using a compatible control interface, if enabled in your setup.</p>
-</div>
-</div>
-<span class="tag">ELEGOO • Robotics • Sensors • Wi-Fi</span>
-<p style="margin-top:18px">Built and presented by <strong>ROBO INVENTOR — BY ANIKET TIWARI</strong>.</p>
-</div>
-</article>
+  <div class="grid">
+    <article class="card car-card">
+      <div class="visual">
+        <img src="elegoo-v4-car.png"
+             alt="ELEGOO V4 robot car with camera module and ultrasonic sensor"
+             loading="lazy"
+             onerror="this.alt='Car photo not found. Check the filename elegoo-v4-car.png in your GitHub repository.'">
+      </div>
+      <div class="cardbody">
+        <h3>ELEGOO V4 Multi-Mode Robot Car</h3>
+        <p class="car-intro">My ELEGOO V4 robot car explores autonomous navigation, sensor-based movement and wireless camera control.</p>
 
-<article class="card">
-<div class="visual"><div class="cardbody">🤖 Project photo coming soon</div></div>
-<div class="cardbody"><h3>Arduino Robotics</h3><p>Arduino experiments with motors, sensors and automation.</p><span class="tag">Arduino • Robotics</span></div>
-</article>
-<article class="card">
-<div class="visual"><div class="cardbody">📡 Project photo coming soon</div></div>
-<div class="cardbody"><h3>Smart Electronics</h3><p>Practical sensor and electronics experiments.</p><span class="tag">Sensors • Electronics</span></div>
-</article>
-</div>
+        <div class="mode-grid">
+          <div class="mode">
+            <h4>Obstacle Avoidance Mode</h4>
+            <p>Uses an ultrasonic sensor to detect obstacles ahead and help the car avoid collisions.</p>
+          </div>
+          <div class="mode">
+            <h4>Camera + Wi-Fi Mode</h4>
+            <p>View the camera feed and control the car wirelessly through its compatible Wi-Fi interface.</p>
+          </div>
+          <div class="mode">
+            <h4>Line Following Mode</h4>
+            <p>Follows a marked path using the car's line-tracking sensors.</p>
+          </div>
+          <div class="mode">
+            <h4>Object Following Mode</h4>
+            <p>Uses supported sensors and programming to detect and follow an object.</p>
+          </div>
+          <div class="mode">
+            <h4>Manual Driving Mode</h4>
+            <p>Drive and steer the car using a compatible remote-control interface, if enabled in your setup.</p>
+          </div>
+        </div>
+
+        <span class="tag">ELEGOO • Robotics • Sensors • Wi-Fi</span>
+        <p style="margin-top:18px">Built by <strong>ROBO INVENTOR — BY ANIKET TIWARI</strong>.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="visual"><div class="placeholder"><span class="symbol">🤖</span>Project photo coming soon</div></div>
+      <div class="cardbody">
+        <h3>Arduino Robotics</h3>
+        <p>Arduino experiments with motors, sensors and automation.</p>
+        <span class="tag">Arduino • Robotics</span>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="visual"><div class="placeholder"><span class="symbol">📡</span>Project photo coming soon</div></div>
+      <div class="cardbody">
+        <h3>Smart Electronics</h3>
+        <p>Practical sensor and electronics experiments.</p>
+        <span class="tag">Sensors • Electronics</span>
+      </div>
+    </article>
+  </div>
 </div>
 </section>
 
 <section id="printing">
 <div class="wrap">
-<div class="section-head">
-<div class="kicker">Designed and made</div>
-<h2>3D Printing</h2>
-<p>Functional parts, robot bodies, enclosures and creative prints.</p>
-</div>
-<div class="grid">
-<article class="card"><div class="visual">🧩</div><div class="cardbody"><h3>Robot Parts</h3><p>Brackets, mounts, wheels and other printed robot parts.</p><span class="tag">3D Design</span></div></article>
-<article class="card"><div class="visual">🛠️</div><div class="cardbody"><h3>Project Enclosures</h3><p>Cases and holders for electronics and sensors.</p><span class="tag">Prototyping</span></div></article>
-<article class="card"><div class="visual">✨</div><div class="cardbody"><h3>Creative Prints</h3><p>Decorative models and useful objects printed on a 3D printer.</p><span class="tag">Maker Projects</span></div></article>
-</div>
+  <div class="section-head">
+    <div class="kicker">Designed and made</div>
+    <h2>3D Printing</h2>
+    <p>Functional parts, robot bodies, enclosures and creative prints.</p>
+  </div>
+  <div class="grid">
+    <article class="card">
+      <div class="visual"><div class="placeholder"><span class="symbol">🧩</span>Print photo coming soon</div></div>
+      <div class="cardbody"><h3>Robot Parts</h3><p>Brackets, mounts, wheels and other printed robot parts.</p><span class="tag">3D Design</span></div>
+    </article>
+    <article class="card">
+      <div class="visual"><div class="placeholder"><span class="symbol">🛠️</span>Print photo coming soon</div></div>
+      <div class="cardbody"><h3>Project Enclosures</h3><p>Cases and holders for electronics and sensors.</p><span class="tag">Prototyping</span></div>
+    </article>
+    <article class="card">
+      <div class="visual"><div class="placeholder"><span class="symbol">✨</span>Print photo coming soon</div></div>
+      <div class="cardbody"><h3>Creative Prints</h3><p>Decorative models and useful objects printed on a 3D printer.</p><span class="tag">Maker Projects</span></div>
+    </article>
+  </div>
 </div>
 </section>
 
 <section id="about">
 <div class="wrap">
-<div class="section-head"><div class="kicker">The maker behind the builds</div><h2>About ROBO INVENTOR</h2></div>
-<div class="aboutgrid">
-<div class="panel">
-<h3>Learn by building.</h3>
-<p class="muted">ROBO INVENTOR is a robotics and maker portfolio by Aniket Tiwari. This website documents hands-on experiments with Arduino, sensors, motors, electronics and 3D printing.</p>
-<p class="muted">The goal is to share project ideas, components, builds, tests and improvements.</p>
-</div>
-<div class="panel values">
-<div><b>Robotics</b><span> Build and test real robot systems.</span></div>
-<div><b>Experimentation</b><span> Learn through practical electronics and coding.</span></div>
-<div><b>3D Printing</b><span> Turn designs into physical parts and prototypes.</span></div>
-</div>
-</div>
+  <div class="section-head">
+    <div class="kicker">The maker behind the builds</div>
+    <h2>About ROBO INVENTOR</h2>
+  </div>
+  <div class="aboutgrid">
+    <div class="panel">
+      <h3>Learn by building.</h3>
+      <p class="muted">ROBO INVENTOR is a robotics and maker portfolio by Aniket Tiwari. This website documents hands-on experiments with Arduino, sensors, motors, electronics and 3D printing.</p>
+      <p class="muted">The goal is to share project ideas, components, builds, tests and improvements.</p>
+    </div>
+    <div class="panel values">
+      <div class="value"><b>Robotics</b><span>Build and test real robot systems.</span></div>
+      <div class="value"><b>Experimentation</b><span>Learn through practical electronics and coding.</span></div>
+      <div class="value"><b>3D Printing</b><span>Turn designs into physical parts and prototypes.</span></div>
+    </div>
+  </div>
 </div>
 </section>
 
 <section id="contact">
 <div class="wrap">
-<div class="panel">
-<div class="kicker">Get in touch</div>
-<h2>Contact ROBO INVENTOR</h2>
-<p class="muted">Explore my work and follow my robotics projects on GitHub.</p>
-<div class="contactrow">
-<a class="btn primary" href="https://github.com/robo-inventor/robo-inventor.github.io" target="_blank" rel="noopener noreferrer">GitHub Repository ↗</a>
-</div>
-</div>
+  <div class="panel">
+    <div class="kicker">Get in touch</div>
+    <h2>Contact ROBO INVENTOR</h2>
+    <p class="muted">Explore my work and follow my robotics projects on GitHub.</p>
+    <div class="contactrow">
+      <a class="btn primary" href="https://github.com/robo-inventor/robo-inventor.github.io" target="_blank" rel="noopener noreferrer">GitHub Repository ↗</a>
+    </div>
+  </div>
 </div>
 </section>
 </main>
 
 <footer>
 <div class="wrap foot">
-<span>© <span id="year"></span> ROBO INVENTOR · BY ANIKET TIWARI</span>
-<a class="toplink" href="#home">Back to top ↑</a>
+  <span>© <span id="year"></span> ROBO INVENTOR · BY ANIKET TIWARI</span>
+  <a class="toplink" href="#home">Back to top ↑</a>
 </div>
 </footer>
 
 <script>
-const menuButton=document.getElementById('menuButton');
-const dropdown=document.getElementById('dropdown');
-menuButton.addEventListener('click',()=>{
-const open=dropdown.classList.toggle('open');
-menuButton.setAttribute('aria-expanded',String(open));
-});
-dropdown.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
-dropdown.classList.remove('open');
-menuButton.setAttribute('aria-expanded','false');
-}));
-document.addEventListener('click',event=>{
-if(!event.target.closest('.menu')){
-dropdown.classList.remove('open');
-menuButton.setAttribute('aria-expanded','false');
-}
-});
-document.getElementById('year').textContent=new Date().getFullYear();
+const menuButton = document.getElementById('menuButton');
+const dropdown = document.getElementById('dropdown');
 
-(()=>{
-const canvas=document.getElementById('particles');
-const ctx=canvas.getContext('2d');
-if(!ctx)return;
-let w=0,h=0,particles=[];
-const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-function resize(){
-const dpr=Math.min(window.devicePixelRatio||1,2);
-w=window.innerWidth;h=window.innerHeight;
-canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);
-canvas.style.width=w+'px';canvas.style.height=h+'px';
-ctx.setTransform(dpr,0,0,dpr,0,0);
-particles=Array.from({length:Math.min(65,Math.floor(w/19))},()=>({
-x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.7+.4,
-speed:Math.random()*.35+.08,alpha:Math.random()*.55+.2
-}));
-}
-function draw(){
-ctx.clearRect(0,0,w,h);
-particles.forEach(p=>{
-ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-ctx.fillStyle=`rgba(71,234,255,${p.alpha})`;ctx.fill();
-if(!reduceMotion){p.y-=p.speed;if(p.y<-5){p.y=h+5;p.x=Math.random()*w;}}
+menuButton.addEventListener('click', () => {
+  const isOpen = dropdown.classList.toggle('open');
+  menuButton.setAttribute('aria-expanded', String(isOpen));
 });
-if(!reduceMotion)requestAnimationFrame(draw);
-}
-window.addEventListener('resize',resize,{passive:true});
-resize();draw();
+
+dropdown.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    dropdown.classList.remove('open');
+    menuButton.setAttribute('aria-expanded', 'false');
+  });
+});
+
+document.addEventListener('click', event => {
+  if (!event.target.closest('.menu')) {
+    dropdown.classList.remove('open');
+    menuButton.setAttribute('aria-expanded', 'false');
+  }
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+(() => {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  let width = 0;
+  let height = 0;
+  let particles = [];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    particles = Array.from(
+      {length: Math.min(65, Math.floor(width / 19))},
+      () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 1.7 + .4,
+        speed: Math.random() * .35 + .08,
+        alpha: Math.random() * .55 + .2
+      })
+    );
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    particles.forEach(particle => {
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(71,234,255,${particle.alpha})`;
+      ctx.fill();
+
+      if (!reducedMotion) {
+        particle.y -= particle.speed;
+        if (particle.y < -5) {
+          particle.y = height + 5;
+          particle.x = Math.random() * width;
+        }
+      }
+    });
+
+    if (!reducedMotion) requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+  draw();
 })();
 </script>
 </body>
